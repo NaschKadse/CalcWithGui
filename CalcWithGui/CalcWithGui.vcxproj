@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="History.cpp" />
     <ClCompile Include="OwnExceptioncpp.cpp" />
     <ClCompile Include="RPN.cpp" />
     <QtRcc Include="CalcWithGui.qrc" />
@@ -101,6 +102,7 @@
   <ItemGroup>
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Calculator.h" />
+    <ClInclude Include="History.h" />
     <ClInclude Include="OwnException.h" />
     <ClInclude Include="RPN.h" />
   </ItemGroup>
