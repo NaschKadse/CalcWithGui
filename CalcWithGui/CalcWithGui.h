@@ -19,7 +19,12 @@ private:
     Ui::CalcWithGuiClass ui;
 
 private slots:
-    void digit_pressed();
+    void button_pressed();
+    void on_pushButton_delete_released();
+    void on_pushButton_allclear_released();
+    void on_pushButton_root_released();
+    void on_pushButton_pi_released();
+    void on_pushButton_result_released();
 };
 
 #endif // CALCWITHGUI_H
