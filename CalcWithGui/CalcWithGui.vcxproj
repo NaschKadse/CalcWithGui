@@ -92,7 +92,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="..\..\..\..\Desktop\CalcWithGui\CalcWithGui.ui" />
+    <QtUic Include="CalcWithGui.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

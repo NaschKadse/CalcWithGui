@@ -40,7 +40,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="..\..\..\..\Desktop\CalcWithGui\CalcWithGui.ui">
+    <QtUic Include="CalcWithGui.ui">
       <Filter>Resource Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="CalcWithGui">
+    <qresource prefix="/CalcWithGui">
+        <file>CalcWithGui.ui</file>
     </qresource>
 </RCC>
