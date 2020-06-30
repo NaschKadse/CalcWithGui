@@ -2,8 +2,12 @@
 #include <QString>
 #include <QDebug>
 #include <string>
+#include "Calculator.h"
+#include "Calculation.h"
+#include "RPN.h"
+#include <stack>
 
-
+std::stack <char> stack;
 
 
 CalcWithGui::CalcWithGui(QWidget* parent)
@@ -101,7 +105,16 @@ void CalcWithGui::on_pushButton_allclear_released()
 
 void CalcWithGui::on_pushButton_result_released()
 {
+    std::stack <char> stack;
     QString label_term;
+
     label_term = ui.label_term->text();
+    std::string bla = label_term.toStdString();
+    RPN ItoP(bla);
+    std:string bla2 = ItoP.infixToPostfix(stack, bla);
+    Calculation test1(bla2);
+    double result = test1.calc(bla2);
+    label_term = QString::number(result);
+    //label_term = QString::fromStdString(bla2);
     ui.label_result->setText(label_term);
 }

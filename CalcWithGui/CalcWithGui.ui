@@ -187,7 +187,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>÷</string>
+     <string>/</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_8">
@@ -251,7 +251,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>×</string>
+     <string>*</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_7">
