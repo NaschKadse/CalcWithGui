@@ -3,6 +3,9 @@
 #include <QDebug>
 #include <string>
 
+
+
+
 CalcWithGui::CalcWithGui(QWidget* parent)
     : QMainWindow(parent)
 {

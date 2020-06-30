@@ -86,6 +86,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Calculation.cpp" />
+    <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="OwnExceptioncpp.cpp" />
+    <ClCompile Include="RPN.cpp" />
     <QtRcc Include="CalcWithGui.qrc" />
     <QtMoc Include="CalcWithGui.h" />
     <ClCompile Include="CalcWithGui.cpp" />
@@ -93,6 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="CalcWithGui.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Calculation.h" />
+    <ClInclude Include="Calculator.h" />
+    <ClInclude Include="OwnException.h" />
+    <ClInclude Include="RPN.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

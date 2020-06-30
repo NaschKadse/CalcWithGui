@@ -27,4 +27,4 @@ private slots:
     void on_pushButton_result_released();
 };
 
-#endif // CALCWITHGUI_H
+#endif // !CALCWITHGUI_H
