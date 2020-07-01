@@ -3,6 +3,14 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_CalcWithGui.h"
+#include <QString>
+#include <QDebug>
+#include <string>
+#include "Calculator.h"
+#include "Calculation.h"
+#include "RPN.h"
+#include "History.h"
+#include <stack>
 
 //namespace Ui {
 //    class CalcWithGui;

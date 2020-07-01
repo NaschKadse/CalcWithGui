@@ -1,13 +1,12 @@
 ﻿#include "CalcWithGui.h"
-#include <QString>
-#include <QDebug>
-#include <string>
-#include "Calculator.h"
-#include "Calculation.h"
-#include "RPN.h"
-#include <stack>
+
 
 std::stack <char> stack;
+string Infix;
+double result;
+History histo(Infix, result);
+int counterCalculation = -1;
+int indexHisto = 0;
 
 
 CalcWithGui::CalcWithGui(QWidget* parent)
@@ -120,22 +119,61 @@ void CalcWithGui::on_pushButton_result_released()
     QString label_term;
 
     label_term = ui.label_term->text();
-    std::string stringlabel_term = label_term.toStdString();
-    RPN ItoP(stringlabel_term);
-    std:string stringlabel_term2 = ItoP.infixToPostfix(stack, stringlabel_term);
-    Calculation Calculation1(stringlabel_term2);
-    double result = Calculation1.calc(stringlabel_term2);
+    Infix = label_term.toStdString();
+
+    RPN ItoP(Infix);
+    std:string Postfix = ItoP.infixToPostfix(stack, Infix);
+
+    Calculation Calculation1(Postfix);
+    result = Calculation1.calc(Postfix);
     label_term = QString::number(result);
     //label_term = QString::fromStdString(bla2);
     ui.label_result->setText(label_term);
+
+    histo.writeHistory(Infix, result);
+    counterCalculation++;
+    indexHisto = counterCalculation;
 }
 
 void CalcWithGui::on_pushButton_up_released()
 {
+    QString label_term;
+    QString label_result;
+    string infixHisto;
+    double resultHisto;
+
+    if (indexHisto > 0)
+    {
+        indexHisto--;
+        infixHisto = histo.outputInfix(indexHisto);
+        resultHisto = histo.outputResult(indexHisto);
+
+        label_term = QString::fromStdString(infixHisto);
+        label_result = QString::number(resultHisto);
+
+        ui.label_term->setText(label_term);
+        ui.label_result->setText(label_result);
+    }
 
 }
 
 void CalcWithGui::on_pushButton_down_released()
 {
+    QString label_term;
+    QString label_result;
+    string infixHisto;
+    double resultHisto;
 
+    if (indexHisto < counterCalculation)
+    {
+        indexHisto++;
+        infixHisto = histo.outputInfix(indexHisto);
+        resultHisto = histo.outputResult(indexHisto);
+
+        label_term = QString::fromStdString(infixHisto);
+        label_result = QString::number(resultHisto);
+
+        ui.label_term->setText(label_term);
+        ui.label_result->setText(label_result);
+    }
 }
