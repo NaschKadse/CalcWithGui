@@ -51,8 +51,13 @@ void CalcWithGui::button_pressed()
     if (label_result == "") 
     {
         label_term = (ui.label_term->text() + button->text());
-        ui.label_term->setText(label_term);
     }
+    else 
+    {
+        label_term = (ui.label_result->text() + button->text());
+        ui.label_result->setText("");
+    }
+    ui.label_term->setText(label_term);
 }
 
 void CalcWithGui::on_pushButton_root_released()
