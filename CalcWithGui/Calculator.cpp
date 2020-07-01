@@ -46,7 +46,7 @@ bool Calculator::noOperator(string output)
 	return check;
 }
 
-string Calculator::checkInfix(string infix, double res)
+string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res um mit Ans rechnen zu können
 {
 	Calculator cal;
 	bool rightInfix = true;
@@ -55,7 +55,7 @@ string Calculator::checkInfix(string infix, double res)
 	int counterKlammeropen = 0;
 	int counterKlammerclose = 0;
 	string help;
-	const bool debugg = true;
+	const bool debugg = false;
 	string root;
 
 	if (debugg)
@@ -79,15 +79,18 @@ string Calculator::checkInfix(string infix, double res)
 		{
 			counterKlammerclose++;
 		}
-		if (infix[i] == 'r') //Result 
-		{
-			help = to_string(res);
-			infix = infix.replace(i, 1, help);
-			if (debugg)
-			{
-				std::cout << i << " old Result: " << infix << endl; //Test
-			}
-		}
+		
+		// Einfügen um mit vorherigem Ergebnis als Ans weiterrechne zu können
+
+		//if ((infix[i] == 'a') && (infix[i+1] == 'n') && (infix[i+2] == 's')) //Result 
+		//{
+		//	help = to_string(res);
+		//	infix = infix.replace(i, 1, help);
+		//	if (debugg)
+		//	{
+		//		std::cout << i << " old Result: " << infix << endl; //Test
+		//	}
+		//}
 		if ((infix[i] == 'p') && (infix[i + 1] == 'i')) //Pi
 		{
 			help = to_string(M_PI);

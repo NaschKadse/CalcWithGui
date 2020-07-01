@@ -33,9 +33,6 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_minus, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_mult, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_divide, SIGNAL(released()), this, SLOT(button_pressed()));
-
-    /////////////////////////////////////
-
 }
 
 void CalcWithGui::button_pressed()
@@ -53,8 +50,18 @@ void CalcWithGui::button_pressed()
     }
     else 
     {
-        label_term = (ui.label_result->text() + button->text());
-        ui.label_result->setText("");
+        string h = (button->text()).toStdString();
+        char Zeichen = h[0];
+
+        if (isdigit(Zeichen))
+        {
+            label_term = button->text();
+            ui.label_result->setText("");
+        }
+        else {
+            label_term = (ui.label_result->text() + button->text());
+            ui.label_result->setText("");
+        }
     }
     ui.label_term->setText(label_term);
 }
@@ -117,10 +124,24 @@ void CalcWithGui::on_pushButton_result_released()
 {
     std::stack <char> stack;
     QString label_term;
+    Calculator Cal;
+    double help;
 
+    /* Behandlung vom res als Parameter für checkInfix --> rechnung mit Ans
+
+    if (counterCalculation == '0')
+    {
+        help = '0';
+    }
+    else
+    {
+        help = histo.outputResult(counterCalculation);
+    }
+    */
     label_term = ui.label_term->text();
     Infix = label_term.toStdString();
-
+    Infix = Cal.checkInfix(Infix); //Ohne Ans
+    
     RPN ItoP(Infix);
     std:string Postfix = ItoP.infixToPostfix(stack, Infix);
 
