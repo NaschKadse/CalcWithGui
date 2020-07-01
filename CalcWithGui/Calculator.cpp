@@ -93,8 +93,19 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 		//}
 		if ((infix[i] == 'p') && (infix[i + 1] == 'i')) //Pi
 		{
+			if (isdigit(infix[i+2]))
+			{
+				infix = infix.insert((i+2), "*");
+			}
+
 			help = to_string(M_PI);
-			infix = infix.replace(i, 1, help);
+			infix = infix.erase(i, 2);
+			infix = infix.insert(i,help);
+
+			if (isdigit(infix[i - 1]))
+			{
+				infix = infix.insert(i, "*");
+			}
 			if (debugg)
 			{
 				std::cout << i << " pi: " << infix << endl; //Test
