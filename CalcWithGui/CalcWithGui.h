@@ -25,6 +25,8 @@ private slots:
     void on_pushButton_root_released();
     void on_pushButton_pi_released();
     void on_pushButton_result_released();
+    void on_pushButton_up_released();
+    void on_pushButton_down_released();
 };
 
 #endif // !CALCWITHGUI_H

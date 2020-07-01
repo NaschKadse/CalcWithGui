@@ -26,7 +26,7 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_8, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_9, SIGNAL(released()), this, SLOT(button_pressed()));
 
-    //connect(ui.pushButton_point, SIGNAL(released()), this, SLOT(button_pressed()));
+    connect(ui.pushButton_point, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_bracketopen , SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_bracketclose, SIGNAL(released()), this, SLOT(button_pressed()));
 
@@ -44,10 +44,15 @@ void CalcWithGui::button_pressed()
     QPushButton* button = (QPushButton*)sender();
 
     QString label_term;
+    QString label_result;
 
-    label_term = (ui.label_term->text() + button->text());
-
-    ui.label_term->setText(label_term);
+    label_result = ui.label_result->text();
+    
+    if (label_result == "") 
+    {
+        label_term = (ui.label_term->text() + button->text());
+        ui.label_term->setText(label_term);
+    }
 }
 
 void CalcWithGui::on_pushButton_root_released()
@@ -58,6 +63,7 @@ void CalcWithGui::on_pushButton_root_released()
     label_term = (ui.label_term->text() + "sqr(");
     ui.label_term->setText(label_term);
 }
+
 void CalcWithGui::on_pushButton_pi_released()
 {
     QPushButton* button = (QPushButton*)sender();
@@ -109,12 +115,22 @@ void CalcWithGui::on_pushButton_result_released()
     QString label_term;
 
     label_term = ui.label_term->text();
-    std::string bla = label_term.toStdString();
-    RPN ItoP(bla);
-    std:string bla2 = ItoP.infixToPostfix(stack, bla);
-    Calculation test1(bla2);
-    double result = test1.calc(bla2);
+    std::string stringlabel_term = label_term.toStdString();
+    RPN ItoP(stringlabel_term);
+    std:string stringlabel_term2 = ItoP.infixToPostfix(stack, stringlabel_term);
+    Calculation Calculation1(stringlabel_term2);
+    double result = Calculation1.calc(stringlabel_term2);
     label_term = QString::number(result);
     //label_term = QString::fromStdString(bla2);
     ui.label_result->setText(label_term);
+}
+
+void CalcWithGui::on_pushButton_up_released()
+{
+
+}
+
+void CalcWithGui::on_pushButton_down_released()
+{
+
 }
