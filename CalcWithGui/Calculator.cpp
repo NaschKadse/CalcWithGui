@@ -58,6 +58,7 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 	string root;
 	QString msg;
 
+	using namespace std;
 	if (debugg)
 	{
 		qDebug() << "-------------------------------------------------";
@@ -72,7 +73,7 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 		if (i < 0)
 		{
 			i = 0;
-			std::cout << "i kleiner 0!!" << endl;
+			qDebug() << "i kleiner 0!!";
 		}
 		if (infix[i] == '(') // Klammern behandeln
 		{
@@ -139,20 +140,23 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 				counterKlammeropen++;
 				for (int y = (i + 3); y < int(infix.length()); y++)
 				{
-					if (infix[y] == ')' && (counterKlammeropen == counterKlammerclose))
+					if ((infix[y] == ')' )||(y = (infix.size()-1)))
 					{
-						//counterKlammerclose++;
-						infix = infix.insert((y + 1), "^(1/2)");
-						y = infix.length();
+						counterKlammerclose++;
+						if (counterKlammeropen == counterKlammerclose)
+						{
+							infix = infix.insert((y + 1), "^(1/2)");
+							y = infix.length();
 						if (debugg)
 						{
-							msg = QString::fromStdString( std::to_string (i) + " Wurzel 2: " + infix);
+							msg = QString::fromStdString(std::to_string(i) + " Wurzel 2: " + infix);
 							qDebug() << msg;
 						}
-					}
-					else
-					{
-						root = root + infix[y];
+						}
+						else
+						{
+							root = root + infix[y];
+						}
 					}
 				}
 				infix = infix.erase(i, 3);
@@ -163,7 +167,7 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 				}
 				if (debugg)
 				{
-					msg = QString::fromStdString( std::to_string (i) + " Wurzel 3: " + infix);
+					msg = QString::fromStdString( std::to_string (i) + " Wurzel 3: " + infix + " Klammern: " + to_string(counterKlammeropen) + " "+ to_string(counterKlammerclose));
 					qDebug() << msg;
 				}
 				root = root + ":::" + infix;
