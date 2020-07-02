@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="dynamicfontsizelabel.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="OwnExceptioncpp.cpp" />
     <ClCompile Include="RPN.cpp" />
@@ -102,6 +103,7 @@
   <ItemGroup>
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Calculator.h" />
+    <QtMoc Include="dynamicfontsizelabel.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="OwnException.h" />
     <ClInclude Include="RPN.h" />
