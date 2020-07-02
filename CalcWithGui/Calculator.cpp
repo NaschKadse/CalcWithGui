@@ -212,7 +212,7 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 				}
 				if (counterOperator > 1) //Wenn mehr als 1 Operator in Reihe ist wird dieser gelöscht
 				{
-					if ((isdigit(infix[i + 1]) && (infix[i] == '-') && (infix[i - 1] != '-')))
+					if ((isdigit(infix[i + 1]) && (infix[i] == '-') && (infix[i - 1] == '-')))
 					{
 						infix = infix.erase(i, 1);
 						i--; //String wird verschoben, deshalb muss der Index mit verchoben werden
@@ -378,7 +378,6 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 										rightInfix = false;
 										if (debugg)
 										{
-
 											msg = QString::fromStdString( std::to_string (i) + " Sonstiges: " + infix);
 											qDebug() << msg;
 										}
@@ -424,9 +423,12 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 		throw (OwnException("\n Error: Empty Input \n \n"));
 	}
 	if (!rightInfix) {
-		std::cout << endl << "  => Korrigierter Infix: " << infix << endl;
+		msg = QString::fromStdString("= > Korrigierter Infix : " + infix);
+		qDebug() << msg;
 	}
 	if (debugg) {
+		msg = QString::fromStdString("= > Infix : " + infix);
+		qDebug() << msg;
 		qDebug() << "";
 		qDebug() << "-------------------------------------------------";
 	}

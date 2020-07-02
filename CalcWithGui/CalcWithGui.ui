@@ -746,6 +746,9 @@ QPushButton:pressed {
       <pointsize>19</pointsize>
      </font>
     </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
     <property name="styleSheet">
      <string notr="true">QLabel {
   qproperty-alignment: 'AlignVCenter | AlignLeftt';
