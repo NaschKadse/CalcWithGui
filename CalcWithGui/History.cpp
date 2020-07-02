@@ -1,6 +1,4 @@
 #include "History.h"
-#include <string>
-#include <vector>
 
 std::vector <string> H_infix;
 std::vector <double> H_result;

@@ -5,6 +5,11 @@
 #include <string>
 #include "Calculator.h"
 #include <iomanip>
+#include <string.h>
+#include <stack>
+#include <iomanip>
+
+#include "OwnException.h"
 
 using namespace std;
 

@@ -1,8 +1,7 @@
 #define _USE_MATH_DEFINES
 
 #include "Calculator.h"
-#include "OwnException.h"
-#include <cmath>
+#include <QDebug>
 
 Calculator::Calculator()
 {
@@ -55,14 +54,18 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 	int counterKlammeropen = 0;
 	int counterKlammerclose = 0;
 	string help;
-	const bool debugg = false;
+	const bool debugg = true;
 	string root;
+	QString msg;
 
 	if (debugg)
 	{
-		std::cout << "Start Checking: " << infix << endl; //Test
+		qDebug() << "-------------------------------------------------";
+		qDebug() << "";
+		msg = QString::fromStdString("Start Checking: " + infix);
+		qDebug() << msg;
 	}
-	//infix = infix. //Upper to Lower Cases
+	//infix = std::tolower();
 
 	for (int i = 0; i < int(infix.length()); i++)
 	{
@@ -93,30 +96,43 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 		//}
 		if ((infix[i] == 'p') && (infix[i + 1] == 'i')) //Pi
 		{
-			if (isdigit(infix[i+2]))
+			if ((i <= (infix.size()-2))&&(isdigit(infix[i+2])))
 			{
 				infix = infix.insert((i+2), "*");
+				if (debugg)
+				{
+					msg = QString::fromStdString( std::to_string (i) + " pi 1: " + infix);
+					qDebug() << msg;
+				}
 			}
 
 			help = to_string(M_PI);
 			infix = infix.erase(i, 2);
 			infix = infix.insert(i,help);
-
-			if (isdigit(infix[i - 1]))
-			{
-				infix = infix.insert(i, "*");
-			}
 			if (debugg)
 			{
-				std::cout << i << " pi: " << infix << endl; //Test
+				msg = QString::fromStdString( std::to_string (i) + " pi 2: " + infix);
+				qDebug() << msg;
 			}
+
+			if ((i>=1)&&(isdigit(infix[i - 1])))
+			{
+				infix = infix.insert(i, "*");
+				if (debugg)
+				{
+					msg = QString::fromStdString( std::to_string (i) + " pi 3: " + infix);
+					qDebug() << msg;
+				}
+			}
+			
 		}
 		if ((infix[i] == 's') && (infix[i + 1] == 'q') && (infix[i + 2] == 'r')) //Wurzel
 		{
 			// sqr(sqr(9)+sqr(9)+sqr(9)) noch keine Lösung
 			if (debugg)
 			{
-				std::cout << i << " Wurzel 1: " << infix << endl; //Test
+				msg = QString::fromStdString( std::to_string (i) + " Wurzel 1: " + infix);
+				qDebug() << msg;
 			}
 			if (infix[i + 3] == '(')
 			{
@@ -130,7 +146,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 						y = infix.length();
 						if (debugg)
 						{
-							std::cout << i << " Wurzel 2: " << infix << endl; //Test
+							msg = QString::fromStdString( std::to_string (i) + " Wurzel 2: " + infix);
+							qDebug() << msg;
 						}
 					}
 					else
@@ -146,7 +163,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 				}
 				if (debugg)
 				{
-					std::cout << i << " Wurzel 3: " << infix << "   root: " << root << endl; //Test
+					msg = QString::fromStdString( std::to_string (i) + " Wurzel 3: " + infix);
+					qDebug() << msg;
 				}
 				root = root + ":::" + infix;
 				return root;
@@ -156,7 +174,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 				infix = infix.erase(i, 3);
 				if (debugg)
 				{
-					std::cout << i << " Wurzel 4: " << infix << endl; //Test
+					msg = QString::fromStdString( std::to_string (i) + " Wurzel 4: " + infix);
+					qDebug() << msg;
 				}
 			}
 		}
@@ -164,7 +183,7 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 		{
 			if (debugg && (counterOperator > 0))
 			{
-				std::cout << i << " set counterOperator = 0; " << endl; //Test
+				qDebug() << " set counterOperator = 0; ";
 			}
 			counterOperator = 0;
 		}
@@ -183,7 +202,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 					counterOperator++;
 					if (debugg)
 					{
-						std::cout << i << " Operator 1: " << infix << endl; //Test
+						msg = QString::fromStdString( std::to_string (i) + " Operator 1: " + infix);
+						qDebug() << msg;
 					}
 				}
 				if (counterOperator > 1) //Wenn mehr als 1 Operator in Reihe ist wird dieser gelöscht
@@ -198,7 +218,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 
 					if (debugg)
 					{
-						std::cout << i << " Operator 2: " << infix << "   counter: " << counterOperator << endl; //Test
+						msg = QString::fromStdString( std::to_string (i) + " Operator 2: " + infix);
+						qDebug() << msg;
 					}
 
 				}
@@ -209,7 +230,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 					rightInfix = false;
 					if (debugg)
 					{
-						std::cout << i << " Operator 3: " << infix << endl; //Test
+						msg = QString::fromStdString( std::to_string (i) + " Operator 3: " + infix);
+						qDebug() << msg;
 					}
 				}
 				if ((i != 0) && ((counterOperator == 1) && (infix[i + 1] == '-')) && ((infix[i - 1] == '(') || (infix[i + 1] == ')'))) //Ausnabme bei Klammern (+ --> (
@@ -219,7 +241,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 					rightInfix = false;
 					if (debugg)
 					{
-						std::cout << i << " Operator 4: " << infix << endl; //Test
+						msg = QString::fromStdString( std::to_string (i) + " Operator 4: " + infix);
+						qDebug() << msg;
 					}
 				}
 			}
@@ -233,7 +256,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 						pointCounter++;
 						if (debugg)
 						{
-							std::cout << i << " Point 0: " << infix << endl; //Test
+							msg = QString::fromStdString( std::to_string (i) + " Point 1: " + infix);
+							qDebug() << msg;
 						}
 					}
 					if ((cal.isOperator(infix[i + 1])) || (infix[i + 1] == '(') || (infix[i + 1] == ')')) //. Vor Operator oder Klammer wird gelöscht
@@ -243,7 +267,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 						rightInfix = false;
 						if (debugg)
 						{
-							std::cout << i << " Point 1: " << infix << endl; //Test
+							msg = QString::fromStdString( std::to_string (i) + " Point 2: " + infix);
+							qDebug() << msg;
 						}
 					}
 					if (pointCounter > 1) //Behandlung von . Reihen
@@ -253,7 +278,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 						rightInfix = false;
 						if (debugg)
 						{
-							std::cout << i << " Point 2: " << infix << endl; //Test
+							msg = QString::fromStdString( std::to_string (i) + " Point 3: " + infix);
+							qDebug() << msg;
 						}
 					}
 
@@ -269,7 +295,9 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 						rightInfix = false;
 						if (debugg)
 						{
-							std::cout << i << " Klammer 1: " << infix << "   Counter(): " << counterKlammeropen << " " << counterKlammerclose << endl; //Test
+							help = i + " Klammer 1: " + infix + "   Counter(): " + std::to_string(counterKlammeropen) + " " + std::to_string(counterKlammerclose);
+							msg = QString::fromStdString(help);
+							qDebug() << msg;
 						}
 					}
 					else
@@ -281,7 +309,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 							rightInfix = false;
 							if (debugg)
 							{
-								std::cout << i << " Klammer 2: " << infix << endl; //Test
+								msg = QString::fromStdString( std::to_string (i) + " Klammer 2: " + infix);
+								qDebug() << msg;
 							}
 						}
 						else
@@ -293,7 +322,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 								rightInfix = false;
 								if (debugg)
 								{
-									std::cout << i << " Klammer 3: " << infix << endl; //Test
+									msg = QString::fromStdString( std::to_string (i) + " Klammer 3: " + infix);
+									qDebug() << msg;
 								}
 							}
 							else
@@ -305,7 +335,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 									rightInfix = false;
 									if (debugg)
 									{
-										std::cout << i << " Klammer 4: " << infix << endl; //Test
+										msg = QString::fromStdString( std::to_string (i) + " Klammer 4: " + infix);
+										qDebug() << msg;
 									}
 									if ((i != 0) && (infix[i] == '*') && (cal.isOperator(infix[i - 1])))
 									{//Behandeln von falsch eingefügten Operatoren nach dem löschen der leeren Klammer
@@ -314,7 +345,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 										rightInfix = false;
 										if (debugg)
 										{
-											std::cout << i << " Klammer 5: " << infix << endl; //Test
+											msg = QString::fromStdString( std::to_string (i) + " Klammer 5: " + infix);
+											qDebug() << msg;
 										}
 									}
 									else
@@ -326,7 +358,8 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 											rightInfix = false;
 											if (debugg)
 											{
-												std::cout << i << " Klammer 6: " << infix << endl; //Test
+												msg = QString::fromStdString( std::to_string (i) + " Klammer 6: " + infix);
+												qDebug() << msg;
 											}
 										}
 									}
@@ -341,7 +374,9 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 										rightInfix = false;
 										if (debugg)
 										{
-											std::cout << i << " Sonstiges: " << infix << endl; //Test
+
+											msg = QString::fromStdString( std::to_string (i) + " Sonstiges: " + infix);
+											qDebug() << msg;
 										}
 									}
 								}
@@ -386,6 +421,10 @@ string Calculator::checkInfix(string infix) //zusätzlicher Parameter double res 
 	}
 	if (!rightInfix) {
 		std::cout << endl << "  => Korrigierter Infix: " << infix << endl;
+	}
+	if (debugg) {
+		qDebug() << "";
+		qDebug() << "-------------------------------------------------";
 	}
 	return ":::" + infix;
 }

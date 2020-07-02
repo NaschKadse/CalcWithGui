@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <string>
 #include "Calculator.h"
+#include "OwnException.h"
 #include "Calculation.h"
 #include "RPN.h"
 #include "History.h"

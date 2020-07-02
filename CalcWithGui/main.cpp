@@ -11,9 +11,13 @@ int main(int argc, char* argv[])
     try {
         gui.show();
     }
-    catch (exception)
+    catch (const OwnException & e)
     {
-
+        std::cout << e.what() << endl;
+    }
+    catch (std::exception e)
+    {
+        std::cout << "Unknown Error: " << e.what() << endl;
     }
     return app.exec();
 }

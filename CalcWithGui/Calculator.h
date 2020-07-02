@@ -1,10 +1,12 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
+#include "Calculator.h"
 #include <iostream>
 #include <string>
-#include "Calculator.h"
 #include <iomanip>
+#include "OwnException.h"
+#include <cmath>
 
 using namespace std;
 

@@ -3,6 +3,7 @@
 
 #include "Calculator.h"
 #include <string>
+#include <vector>
 
 
 class History : public Calculator

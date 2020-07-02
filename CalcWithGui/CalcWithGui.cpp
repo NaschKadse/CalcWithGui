@@ -1,4 +1,5 @@
 ﻿#include "CalcWithGui.h"
+#include "OwnException.h"
 
 
 std::stack <char> stack;
@@ -126,34 +127,55 @@ void CalcWithGui::on_pushButton_result_released()
     QString label_term;
     Calculator Cal;
     double help;
+    bool errorStatus;
+    QString msg;
 
-    /* Behandlung vom res als Parameter für checkInfix --> rechnung mit Ans
+    try {
+        errorStatus = false;
+        /* Behandlung vom res als Parameter für checkInfix --> rechnung mit Ans
 
-    if (counterCalculation == '0')
-    {
-        help = '0';
-    }
-    else
-    {
-        help = histo.outputResult(counterCalculation);
-    }
-    */
-    label_term = ui.label_term->text();
-    Infix = label_term.toStdString();
-    Infix = Cal.checkInfix(Infix); //Ohne Ans
-    
-    RPN ItoP(Infix);
+        if (counterCalculation == '0')
+        {
+            help = '0';
+        }
+        else
+        {
+            help = histo.outputResult(counterCalculation);
+        }
+        */
+        label_term = ui.label_term->text();
+        Infix = label_term.toStdString();
+        Infix = Cal.checkInfix(Infix); //Ohne Ans
+
+        RPN ItoP(Infix);
     std:string Postfix = ItoP.infixToPostfix(stack, Infix);
 
-    Calculation Calculation1(Postfix);
-    result = Calculation1.calc(Postfix);
-    label_term = QString::number(result);
-    //label_term = QString::fromStdString(bla2);
-    ui.label_result->setText(label_term);
+        Calculation Calculation1(Postfix);
+        result = Calculation1.calc(Postfix);
+        label_term = QString::number(result);
+        //label_term = QString::fromStdString(bla2);
+        ui.label_result->setText(label_term);
+    }
+    catch (const OwnException & e)
+    {
+        qDebug() << e.what();
+        ui.label_result->setText(e.what());
+        errorStatus = true;
+    }
+    catch (std::exception e)
+    {
+        msg = QString::fromStdString("Unknown Error: " + string(e.what()));
+        qDebug() << msg;
+        ui.label_result->setText(msg);
+        errorStatus = true;
+    }
 
-    histo.writeHistory(Infix, result);
-    counterCalculation++;
-    indexHisto = counterCalculation;
+    if (!errorStatus)
+    {
+        histo.writeHistory(Infix, result);
+        counterCalculation++;
+        indexHisto = counterCalculation;
+    }
 }
 
 void CalcWithGui::on_pushButton_up_released()

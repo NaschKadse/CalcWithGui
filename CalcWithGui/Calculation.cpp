@@ -1,9 +1,5 @@
 #include "Calculation.h"
-#include <string.h>
-#include <stack>
-#include <iomanip>
 
-#include "OwnException.h"
 
 Calculation::Calculation(string output) : m_output(output)
 {
