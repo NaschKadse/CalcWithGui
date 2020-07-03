@@ -53,10 +53,10 @@
     <ClCompile Include="History.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dynamicfontsizelabel.cpp">
+    <ClCompile Include="InputCheck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputCheck.cpp">
+    <ClCompile Include="DynamicFontSizeLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,7 +86,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="dynamicfontsizelabel.h">
+    <QtMoc Include="DynamicFontSizeLabel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

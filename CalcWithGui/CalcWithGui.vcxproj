@@ -46,6 +46,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\klein\source\repos\CalcWithGui\CalcWithGui;C:\Users\klein\source\repos\CalcWithGui\CalcWithGui\src;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\klein\source\repos\CalcWithGui\CalcWithGui;C:\Users\klein\source\repos\CalcWithGui\CalcWithGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
     <QtInstall>msvc2019</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
@@ -88,7 +96,7 @@
   <ItemGroup>
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Calculator.cpp" />
-    <ClCompile Include="dynamicfontsizelabel.cpp" />
+    <ClCompile Include="DynamicFontSizeLabel.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="InputCheck.cpp" />
     <ClCompile Include="OwnExceptioncpp.cpp" />
@@ -104,7 +112,7 @@
   <ItemGroup>
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Calculator.h" />
-    <QtMoc Include="dynamicfontsizelabel.h" />
+    <QtMoc Include="DynamicFontSizeLabel.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="InputCheck.h" />
     <ClInclude Include="OwnException.h" />

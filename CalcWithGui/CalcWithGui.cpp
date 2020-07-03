@@ -7,7 +7,6 @@ double result;
 History histo(Infix, result);
 int counterCalculation = -1;
 int indexHisto = 0;
-dynamicfron
 
 
 
@@ -21,7 +20,7 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_2, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_3, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_4, SIGNAL(released()), this, SLOT(button_pressed()));
-    //connect(ui.pushButton_5, SIGNAL(released()), this, SLOT(button_pressed()));
+    connect(ui.pushButton_5, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_6, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_7, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_8, SIGNAL(released()), this, SLOT(button_pressed()));
@@ -37,12 +36,6 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_divide, SIGNAL(released()), this, SLOT(button_pressed()));
 }
 
-void CalcWithGui::on_pushButton_5_released()
-{
-    QString label_test;
-    label_test = label_test + "5";
-    ui.label_test->setText(label_test);
-}
 
 void CalcWithGui::button_pressed()
 {
