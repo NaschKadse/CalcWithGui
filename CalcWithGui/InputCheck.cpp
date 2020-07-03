@@ -76,7 +76,7 @@ string InputCheck::checkRoot(string m_root)
 				isRoot = false;
 				if (result < 0)
 				{
-					throw (OwnException("Negative Root\n \n"));
+					throw (OwnException("Negative Root"));
 				}
 				else
 				{
@@ -219,9 +219,10 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 				{
 					counterOperator = 0;
 				}
-				if (((i == 0) && (infix[i] != '-')) || (i == (infix.size())))
+				if (((i == 0) && (infix[i] != '-')) || (i == (infix.size()-1)))
 				{
-					counterOperator++;
+					infix = infix.erase(i, 1);
+					i--; //String wird verschoben, deshalb muss der Index mit verchoben werden
 					if (debugg)
 					{
 						msg = QString::fromStdString(std::to_string(i) + " Operator 1: " + infix);
@@ -234,6 +235,10 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 					{
 						infix = infix.erase(i, 1);
 						i--; //String wird verschoben, deshalb muss der Index mit verchoben werden
+					}
+					else 
+					{
+						throw (OwnException("double Operator"));
 					}
 
 					rightInfix = false;
@@ -350,7 +355,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 							}
 							else
 							{
-								if ((infix[i] == ')') && (i != 0) && (infix[i - 1] == '(')) //Löschen einer leeren Klammer
+								if ((infix[i] == ')') && (i != 0) && (infix[i - 1] == '(')) //Löschen einer leeren Klammer ()
 								{
 									infix = infix.erase((i - 1), 2);
 									i--;
@@ -361,7 +366,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 										qDebug() << msg;
 									}
 									if ((i != 0) && (infix[i] == '*') && (cal.isOperator(infix[i - 1])))
-									{//Behandeln von falsch eingefügten Operatoren nach dem löschen der leeren Klammer
+									{ //Behandeln von falsch eingefügten Operatoren nach dem löschen der leeren Klammer
 										infix = infix.erase(i, 1);
 										i--;
 										rightInfix = false;
@@ -441,7 +446,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 
 	if (infix == "")
 	{
-		throw (OwnException("\n Error: Empty Input \n \n"));
+		throw (OwnException("Error: Empty Input"));
 	}
 
 	if (debugg) {

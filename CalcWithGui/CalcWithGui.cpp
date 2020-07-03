@@ -59,8 +59,17 @@ void CalcWithGui::button_pressed()
             ui.label_result->setText("");
         }
         else {
-            label_term = (ui.label_result->text() + button->text());
-            ui.label_result->setText("");
+            h = label_result.toStdString();
+            if (isdigit(h[0]))
+            {
+                label_term = (ui.label_result->text() + button->text());
+                ui.label_result->setText("");
+            }
+            else
+            {
+                label_term = button->text();
+                ui.label_result->setText("");
+            }
         }
     }
     ui.label_term->setText(label_term);
