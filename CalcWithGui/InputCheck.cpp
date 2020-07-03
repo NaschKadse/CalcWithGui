@@ -453,7 +453,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 		msg = QString::fromStdString("= > Root Infix : " + infix);
 		qDebug() << msg;
 	}
-	infix = checkRoot(infix);
+	//infix = checkRoot(infix);
 	rightInfix = false; //Test
 
 	if (!rightInfix) {

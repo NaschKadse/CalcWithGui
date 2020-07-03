@@ -171,6 +171,7 @@ void CalcWithGui::on_pushButton_result_released()
 
         label_term = ui.label_term->text();
         Infix = label_term.toStdString();
+        /* //Test
         if(counterCalculation >= 0)
         {
             Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Ohne Ans
@@ -178,7 +179,7 @@ void CalcWithGui::on_pushButton_result_released()
         else
         {
             Infix = check.checkInfix(Infix, 0.0);
-        }
+        }*/
         RPN ItoP(Infix);
         std:string Postfix = ItoP.infixToPostfix(stack, Infix);
 

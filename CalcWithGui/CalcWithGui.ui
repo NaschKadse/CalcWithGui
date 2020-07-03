@@ -96,6 +96,9 @@ QPushButton:pressed {
     <property name="text">
      <string>AC</string>
     </property>
+    <property name="shortcut">
+     <string>C</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_bracketopen">
     <property name="geometry">
@@ -729,7 +732,7 @@ QPushButton:pressed {
      <string>.</string>
     </property>
     <property name="shortcut">
-     <string>,, .</string>
+     <string>.</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_term">
