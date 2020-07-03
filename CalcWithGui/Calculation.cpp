@@ -71,29 +71,52 @@ double Calculation::calc(string m_output)
 				}
 				else if (isOperator(m_output[i]))
 				{
-					rValue = stack3.top();
-					stack3.pop();
-					lValue = stack3.top();
-					stack3.pop();
-					if (m_output[i] == '+')
+					if (m_output[i] == 'r')
 					{
+						lValue = stack3.top();
+						stack3.pop();
+						if (lValue < 0)
+						{
+							throw (OwnException("Negative Root"));
+						}
+						result = sqrt(lValue);
+						stack3.push(result);
+					}
+					else if (m_output[i] == '+')
+					{
+						rValue = stack3.top();
+						stack3.pop();
+						lValue = stack3.top();
+						stack3.pop();
 						result = lValue + rValue;
 						stack3.push(result);
 					}
 					else if (m_output[i] == '-')
 					{
+						rValue = stack3.top();
+						stack3.pop();
+						lValue = stack3.top();
+						stack3.pop();
 						result = lValue - rValue;
 						stack3.push(result);
 					}
 					else if (m_output[i] == '*')
 					{
+						rValue = stack3.top();
+						stack3.pop();
+						lValue = stack3.top();
+						stack3.pop();
 						result = lValue * rValue;
 						stack3.push(result);
 					}
 					else if (m_output[i] == '/')
 					{
+						rValue = stack3.top();
+						stack3.pop();
+						lValue = stack3.top();
+						stack3.pop();
 						if (rValue == 0) {
-							throw (OwnException("Math error: Division by Zero \n \n"));
+							throw (OwnException("Division by Zero"));
 						}
 						else {
 							result = lValue / rValue;
@@ -102,6 +125,10 @@ double Calculation::calc(string m_output)
 					}
 					else if (m_output[i] == '^')
 					{
+						rValue = stack3.top();
+						stack3.pop();
+						lValue = stack3.top();
+						stack3.pop();
 						result = pow(lValue, rValue);
 						stack3.push(result);
 					}

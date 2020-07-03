@@ -12,7 +12,7 @@ RPN::~RPN()
 // Operator precedence function
 int RPN::precedence(char c)
 {
-	if (c == '^')
+	if (c == '^' || c == 'r')
 	{
 		return 3;
 	}
@@ -51,7 +51,7 @@ string RPN::infixToPostfix(stack<char>stack, string m_infix)
 		}
 
 		//Pre Numeric Spacer
-		if ((isdigit(m_infix[i]) && isOperator(m_infix[i + 1])) || (m_infix[i] == ')' && isOperator(m_infix[i + 1])))
+		if ((isdigit(m_infix[i]) && isOperator(m_infix[i + 1])) || (m_infix[i] == ')' && (isOperator(m_infix[i + 1]) || m_infix[i + 1] == 'r')))
 		{
 			postfix += spacer;
 		}
@@ -78,7 +78,7 @@ string RPN::infixToPostfix(stack<char>stack, string m_infix)
 			}
 		}
 		// Operator Check
-		else if (isOperator(m_infix[i]) && i > 0 && m_infix[i - 1] != '(')
+		else if (((isOperator(m_infix[i]) && i > 0 && m_infix[i - 1] != '(') || m_infix[i] == 'r'))
 		{
 			// Push Operator to Stack if stack is empty
 			if (stack.empty())
