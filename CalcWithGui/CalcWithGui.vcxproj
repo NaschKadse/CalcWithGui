@@ -90,6 +90,7 @@
     <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="dynamicfontsizelabel.cpp" />
     <ClCompile Include="History.cpp" />
+    <ClCompile Include="InputCheck.cpp" />
     <ClCompile Include="OwnExceptioncpp.cpp" />
     <ClCompile Include="RPN.cpp" />
     <QtRcc Include="CalcWithGui.qrc" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Calculator.h" />
     <QtMoc Include="dynamicfontsizelabel.h" />
     <ClInclude Include="History.h" />
+    <ClInclude Include="InputCheck.h" />
     <ClInclude Include="OwnException.h" />
     <ClInclude Include="RPN.h" />
   </ItemGroup>

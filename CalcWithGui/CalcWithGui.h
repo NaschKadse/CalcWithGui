@@ -11,6 +11,7 @@
 #include "Calculation.h"
 #include "RPN.h"
 #include "History.h"
+#include "InputCheck.h"
 #include <stack>
 
 //namespace Ui {

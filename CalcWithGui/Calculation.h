@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stack>
 #include <iomanip>
+#include <QDebug>
 
 #include "OwnException.h"
 

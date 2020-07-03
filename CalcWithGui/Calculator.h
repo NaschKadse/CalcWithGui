@@ -6,7 +6,7 @@
 #include <string>
 #include <iomanip>
 #include "OwnException.h"
-#include <cmath>
+
 
 using namespace std;
 
@@ -18,8 +18,6 @@ public:
 	~Calculator();
 	virtual bool isOperator(char c);
 	virtual bool noOperator(string output);
-	string checkInfix(string infix); // double Res um mit Ans rechnen zu können
-	char checkPreMinus(string infix);
 
 protected:
 

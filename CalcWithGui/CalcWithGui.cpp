@@ -1,6 +1,4 @@
 ﻿#include "CalcWithGui.h"
-#include "OwnException.h"
-
 
 std::stack <char> stack;
 string Infix;
@@ -27,13 +25,14 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_9, SIGNAL(released()), this, SLOT(button_pressed()));
 
     connect(ui.pushButton_point, SIGNAL(released()), this, SLOT(button_pressed()));
-    connect(ui.pushButton_bracketopen , SIGNAL(released()), this, SLOT(button_pressed()));
+    connect(ui.pushButton_bracketopen, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_bracketclose, SIGNAL(released()), this, SLOT(button_pressed()));
 
     connect(ui.pushButton_plus, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_minus, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_mult, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_divide, SIGNAL(released()), this, SLOT(button_pressed()));
+    //connect(ui.pushButton_potenz, SIGNAL(released()), this, SLOT(button_pressed()));
 }
 
 void CalcWithGui::button_pressed()
@@ -44,12 +43,12 @@ void CalcWithGui::button_pressed()
     QString label_result;
 
     label_result = ui.label_result->text();
-    
-    if (label_result == "") 
+
+    if (label_result == "")
     {
         label_term = (ui.label_term->text() + button->text());
     }
-    else 
+    else
     {
         string h = (button->text()).toStdString();
         char Zeichen = h[0];
@@ -69,20 +68,39 @@ void CalcWithGui::button_pressed()
 
 void CalcWithGui::on_pushButton_root_released()
 {
-    QPushButton* button = (QPushButton*)sender();
     QString label_term;
+    QString label_result;
 
-    label_term = (ui.label_term->text() + "sqr(");
+    label_result = ui.label_result->text();
+    if (label_result == "")
+    {
+        label_term = (ui.label_term->text() + "sqr(");
+    }
+    else
+    {
+        ui.label_result->setText("");
+        label_term = "sqr(";
+    }
     ui.label_term->setText(label_term);
 }
 
 void CalcWithGui::on_pushButton_pi_released()
 {
-    QPushButton* button = (QPushButton*)sender();
     QString label_term;
+    QString label_result;
 
-    label_term = (ui.label_term->text() + "pi");
-    ui.label_term->setText(label_term);
+    label_result = ui.label_result->text();
+
+    if (label_result == "")
+    {
+        label_term = (ui.label_term->text() + "pi");
+    }
+    else
+    {
+        label_term = "pi";
+        ui.label_result->setText("");
+    }
+    ui.label_term->setText(label_term);    
 }
 
 void CalcWithGui::on_pushButton_delete_released()
@@ -125,7 +143,7 @@ void CalcWithGui::on_pushButton_result_released()
 {
     std::stack <char> stack;
     QString label_term;
-    Calculator Cal;
+    InputCheck check(Infix);
     double help;
     bool errorStatus;
     QString msg;
@@ -145,10 +163,10 @@ void CalcWithGui::on_pushButton_result_released()
         */
         label_term = ui.label_term->text();
         Infix = label_term.toStdString();
-        Infix = Cal.checkInfix(Infix); //Ohne Ans
+        Infix = check.checkInfix(Infix); //Ohne Ans
 
         RPN ItoP(Infix);
-    std:string Postfix = ItoP.infixToPostfix(stack, Infix);
+        std:string Postfix = ItoP.infixToPostfix(stack, Infix);
 
         Calculation Calculation1(Postfix);
         result = Calculation1.calc(Postfix);
@@ -220,3 +238,5 @@ void CalcWithGui::on_pushButton_down_released()
         ui.label_result->setText(label_result);
     }
 }
+
+//void CalcWithGui::on_pushButton_ans_released()
