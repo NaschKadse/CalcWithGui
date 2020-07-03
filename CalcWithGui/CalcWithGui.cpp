@@ -32,7 +32,7 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_minus, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_mult, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_divide, SIGNAL(released()), this, SLOT(button_pressed()));
-    //connect(ui.pushButton_potenz, SIGNAL(released()), this, SLOT(button_pressed()));
+    connect(ui.pushButton_potenz, SIGNAL(released()), this, SLOT(button_pressed()));
 }
 
 void CalcWithGui::button_pressed()
@@ -120,13 +120,22 @@ void CalcWithGui::on_pushButton_delete_released()
         }
         else
         {
+            //Behandlung von pi
             if ((label_term.size() > 1) && (label_term[label_term.size() - 2] == ("p")) && (label_term[label_term.size() - 1] == ("i")))
             {
                 label_term.resize(label_term.size() - 2);
             }
             else
             {
-                label_term.resize(label_term.size() - 1);
+                //behandlung von Ans
+                if ((label_term.size() > 2) && (label_term[label_term.size() - 3] == ("A")) && (label_term[label_term.size() - 2] == ("n")) && (label_term[label_term.size() - 1] == ("s")))
+                {
+                    label_term.resize(label_term.size() - 3);
+                }
+                else
+                {
+                    label_term.resize(label_term.size() - 1);
+                }
             }
         }        
         ui.label_term->setText(label_term);
@@ -150,28 +159,23 @@ void CalcWithGui::on_pushButton_result_released()
 
     try {
         errorStatus = false;
-        /* Behandlung vom res als Parameter für checkInfix --> rechnung mit Ans
 
-        if (counterCalculation == '0')
+        label_term = ui.label_term->text();
+        Infix = label_term.toStdString();
+        if(counterCalculation >= 0)
         {
-            help = '0';
+            Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Ohne Ans
         }
         else
         {
-            help = histo.outputResult(counterCalculation);
+            Infix = check.checkInfix(Infix, 0.0);
         }
-        */
-        label_term = ui.label_term->text();
-        Infix = label_term.toStdString();
-        Infix = check.checkInfix(Infix); //Ohne Ans
-
         RPN ItoP(Infix);
         std:string Postfix = ItoP.infixToPostfix(stack, Infix);
 
         Calculation Calculation1(Postfix);
         result = Calculation1.calc(Postfix);
         label_term = QString::number(result);
-        //label_term = QString::fromStdString(bla2);
         ui.label_result->setText(label_term);
     }
     catch (const OwnException & e)
@@ -239,4 +243,21 @@ void CalcWithGui::on_pushButton_down_released()
     }
 }
 
-//void CalcWithGui::on_pushButton_ans_released()
+void CalcWithGui::on_pushButton_ans_released()
+{
+    QString label_term;
+    QString label_result;
+
+    label_result = ui.label_result->text();
+
+    if (label_result == "")
+    {
+        label_term = (ui.label_term->text() + "Ans");
+    }
+    else
+    {
+        label_term = "Ans";
+        ui.label_result->setText("");
+    }
+    ui.label_term->setText(label_term);
+}

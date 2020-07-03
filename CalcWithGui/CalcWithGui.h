@@ -37,6 +37,7 @@ private slots:
     void on_pushButton_result_released();
     void on_pushButton_up_released();
     void on_pushButton_down_released();
+    void on_pushButton_ans_released();
 };
 
 #endif // !CALCWITHGUI_H

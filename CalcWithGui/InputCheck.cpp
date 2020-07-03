@@ -93,7 +93,7 @@ string InputCheck::checkRoot(string m_root)
 	return m_root;
 }
 
-string InputCheck::checkInfix(string infix) //zusätzlicher Parameter double res um mit Ans rechnen zu können
+string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter double res um mit Ans rechnen zu können
 {
 	Calculator cal;
 	bool rightInfix = true;
@@ -137,15 +137,36 @@ string InputCheck::checkInfix(string infix) //zusätzlicher Parameter double res 
 
 		// Einfügen um mit vorherigem Ergebnis als Ans weiterrechne zu können
 
-		//if ((infix[i] == 'a') && (infix[i+1] == 'n') && (infix[i+2] == 's')) //Result 
-		//{
-		//	help = to_string(res);
-		//	infix = infix.replace(i, 1, help);
-		//	if (debugg)
-		//	{
-		//		std::cout << i << " old Result: " << infix << endl; //Test
-		//	}
-		//}
+		if ((infix[i] == 'A') && (infix[i+1] == 'n') && (infix[i+2] == 's')) //Result 
+		{
+			help = to_string(res);
+			infix = infix.erase(i, 3);
+			if ((i>=1)&&(isdigit(infix[i - 1])))
+			{
+				help = "*" +help;
+				if (debugg)
+				{
+					msg = QString::fromStdString(std::to_string(i) + " old Result1: " + infix);
+					qDebug() << msg;
+				}
+			}
+			if (isdigit(infix[i]))
+			{
+				help = help + "*";
+				if (debugg)
+				{
+					msg = QString::fromStdString(std::to_string(i) + " old Result2: " + infix);
+					qDebug() << msg;
+				}
+			}
+			infix = infix.insert(i, help);
+
+			if (debugg)
+			{
+				msg = QString::fromStdString(std::to_string(i) +  " old Result3: " + infix);
+				qDebug() << msg;
+			}
+		}
 		if ((infix[i] == 'p') && (infix[i + 1] == 'i')) //Pi
 		{
 			if ((i <= (infix.size() - 2)) && (isdigit(infix[i + 2])))

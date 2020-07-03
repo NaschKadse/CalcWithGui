@@ -19,7 +19,7 @@ class InputCheck
 	public:
 		InputCheck(string root);
 		~InputCheck();
-		string checkInfix(string infix);
+		string checkInfix(string infix, double res);
 
 	protected:
 
