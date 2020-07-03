@@ -32,7 +32,6 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_minus, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_mult, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_divide, SIGNAL(released()), this, SLOT(button_pressed()));
-    connect(ui.pushButton_potenz, SIGNAL(released()), this, SLOT(button_pressed()));
 }
 
 void CalcWithGui::button_pressed()
@@ -143,11 +142,22 @@ void CalcWithGui::on_pushButton_delete_released()
                 }
                 else
                 {
-                    label_term.resize(label_term.size() - 1);
+                    if ((label_term.size() > 1) && (label_term[label_term.size() - 2] == ("^")) && (label_term[label_term.size() - 1] == ("(")))
+                    {
+                        label_term.resize(label_term.size() - 2);
+                    }
+                    else
+                    {
+                        label_term.resize(label_term.size() - 1);
+                    }
                 }
             }
         }        
         ui.label_term->setText(label_term);
+    }
+    else 
+    {
+        ui.label_result->setText("");
     }
 }
 
@@ -165,13 +175,13 @@ void CalcWithGui::on_pushButton_result_released()
     double help;
     bool errorStatus;
     QString msg;
+    bool debug = true;
 
     try {
         errorStatus = false;
 
         label_term = ui.label_term->text();
         Infix = label_term.toStdString();
-        /* //Test
         if(counterCalculation >= 0)
         {
             Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Ohne Ans
@@ -179,13 +189,28 @@ void CalcWithGui::on_pushButton_result_released()
         else
         {
             Infix = check.checkInfix(Infix, 0.0);
-        }*/
+        }
+        if (debug)
+        {
+            msg = QString::fromStdString("Checked: "+Infix);
+            qDebug() << msg;
+        }
         RPN ItoP(Infix);
         std:string Postfix = ItoP.infixToPostfix(stack, Infix);
 
+        if (debug)
+        {
+            msg = QString::fromStdString("Postfix: "+ Postfix);
+            qDebug() << msg;
+        }
         Calculation Calculation1(Postfix);
         result = Calculation1.calc(Postfix);
-        label_term = QString::number(result);
+        if (debug)
+        {
+            msg = QString::fromStdString("Result: " + to_string(result));
+            qDebug() << msg;
+        }
+        label_term = QString::number(result, 'g',10); //Präzision von 10
         ui.label_result->setText(label_term);
     }
     catch (const OwnException & e)
@@ -204,6 +229,8 @@ void CalcWithGui::on_pushButton_result_released()
 
     if (!errorStatus)
     {
+        label_term = ui.label_term->text();
+        Infix = label_term.toStdString();
         histo.writeHistory(Infix, result);
         counterCalculation++;
         indexHisto = counterCalculation;
@@ -267,6 +294,25 @@ void CalcWithGui::on_pushButton_ans_released()
     else
     {
         label_term = "Ans";
+        ui.label_result->setText("");
+    }
+    ui.label_term->setText(label_term);
+}
+
+void CalcWithGui::on_pushButton_potenz_released()
+{
+    QString label_term;
+    QString label_result;
+
+    label_result = ui.label_result->text();
+
+    if (label_result == "")
+    {
+        label_term = (ui.label_term->text() + "^(");
+    }
+    else
+    {
+        label_term = ui.label_result->text()+"^(";
         ui.label_result->setText("");
     }
     ui.label_term->setText(label_term);

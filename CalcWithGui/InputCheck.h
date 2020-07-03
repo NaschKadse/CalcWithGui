@@ -17,15 +17,13 @@ using namespace std;
 class InputCheck
 {
 	public:
-		InputCheck(string root);
+		InputCheck(string infix);
 		~InputCheck();
 		string checkInfix(string infix, double res);
 
 	protected:
 
 	private:
-		string checkRoot(string m_root);
-		string m_root = "";
 };
 
 #endif // !INPUTCHECK_H

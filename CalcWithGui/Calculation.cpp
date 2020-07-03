@@ -69,7 +69,7 @@ double Calculation::calc(string m_output)
 					stack3.push(d_helper);
 					d_helper = 0.0;
 				}
-				else if (isOperator(m_output[i]))
+				else if (isOperator(m_output[i]) || (m_output[i] == 'r'))
 				{
 					if (m_output[i] == 'r')
 					{
