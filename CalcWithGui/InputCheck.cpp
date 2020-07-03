@@ -116,7 +116,11 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 				}
 			}
 
-			help = to_string(M_PI);
+			double bla = M_PI;
+			//help = to_string(M_PI);
+			QString blaaa;
+			blaaa = QString::number(bla, 'g', 10); //Präzision von 10
+			help = blaaa.toStdString();
 			infix = infix.erase(i, 2);
 			infix = infix.insert(i, help);
 			if (debug)
@@ -302,7 +306,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 								qDebug() << msg;
 							}
 						}
-						else if (infix[i] == 'r' && isdigit(infix[i-1])) //Behandlung pisqr( --> pi*sqr(
+						else if (i > 0 && infix[i] == 'r' && isdigit(infix[i-1])) //Behandlung pisqr( --> pi*sqr(
 						{
 							infix = infix.insert(i, "*");
 							i++;
