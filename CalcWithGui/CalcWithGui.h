@@ -13,6 +13,7 @@
 #include "History.h"
 #include "InputCheck.h"
 #include <stack>
+#include "dynamicfontsizelabel.h"
 
 //namespace Ui {
 //    class CalcWithGui;
@@ -39,6 +40,7 @@ private slots:
     void on_pushButton_down_released();
     void on_pushButton_ans_released();
     void on_pushButton_potenz_released();
+    void on_pushButton_5_released();
 };
 
 #endif // !CALCWITHGUI_H
