@@ -40,7 +40,7 @@ string RPN::infixToPostfix(stack<char>stack, string m_infix)
 
 	for (int i = 0; i < m_infix.length(); i++)
 	{
-		if (m_infix[i] >= '0' && m_infix[i] <= '9' || m_infix[i] == '.' || i == 0 && m_infix[i] == '-')
+		if (m_infix[i] >= '0' && m_infix[i] <= '9' || m_infix[i] == '.' || i == 0 && m_infix[i] == '-' && m_infix[i + 1] != '(')
 		{
 			postfix += m_infix[i];
 		}
