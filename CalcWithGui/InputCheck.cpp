@@ -294,7 +294,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 					}
 					else
 					{
-						if ((infix[i] == '(') && (i != 0) && (isdigit(infix[i-1]) || (infix[i-1]== 'p')) && (infix[i + 1] != ')') && (i != (infix.size()-1))) //Behandlung x( --> x*(
+						if ((infix[i] == '(') && (i != 0) && (isdigit(infix[i-1]) || (infix[i-1]== 'p') || (infix[i - 1] == ')')) && (infix[i + 1] != ')') && (i != (infix.size()-1))) //Behandlung x( --> x*(
 						{
 							infix = infix.insert(i, "*");
 							i++;
@@ -379,8 +379,11 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 	{
 		throw (OwnException("Error: Empty Input"));
 	}
-	
-	rightInfix = false; //Test
+	if (debug) {
+		rightInfix = false;
+
+		//infix += "*"; //Fehler Test
+	}
 
 	if (!rightInfix) {
 		msg = QString::fromStdString("= > Korrigierter Infix : " + infix);

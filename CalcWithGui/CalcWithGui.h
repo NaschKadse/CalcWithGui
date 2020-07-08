@@ -15,10 +15,6 @@
 #include <stack>
 #include "dynamicfontsizelabel.h"
 
-//namespace Ui {
-//    class CalcWithGui;
-//}
-
 class CalcWithGui : public QMainWindow
 {
     Q_OBJECT
