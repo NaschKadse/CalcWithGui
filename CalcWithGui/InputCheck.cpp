@@ -35,7 +35,6 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 		msg = QString::fromStdString("Start Checking: " + infix);
 		qDebug() << msg;
 	}
-	//infix = std::tolower();
 
 	for (int i = 0; i < int(infix.length()); i++)
 	{
@@ -295,7 +294,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 					}
 					else
 					{
-						if ((infix[i] == '(') && (i != 0) && (isdigit(infix[i-1]) || (infix[i-1]== 'p')) && (infix[i + 1] != ')')) //Behandlung x( --> x*(
+						if ((infix[i] == '(') && (i != 0) && (isdigit(infix[i-1]) || (infix[i-1]== 'p')) && (infix[i + 1] != ')') && (i != (infix.size()-1))) //Behandlung x( --> x*(
 						{
 							infix = infix.insert(i, "*");
 							i++;

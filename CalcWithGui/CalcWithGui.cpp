@@ -62,7 +62,7 @@ void CalcWithGui::button_pressed()
         }
         else {
             h = label_result.toStdString();
-            if (isdigit(h[0]))
+            if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
             {
                 label_term = (ui.label_result->text() + button->text());
                 ui.label_result->setText("");

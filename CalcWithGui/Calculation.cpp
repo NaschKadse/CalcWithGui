@@ -30,112 +30,124 @@ double Calculation::calc(string m_output)
 	double rValue = 0.0;		// right Calculation Value
 	double result = 0.0;		// intermediate result
 	double endresult = 0.0;		// endresult
+	QString msg;				// error message
 
-
-	if (noOperator(m_output))
-	{
-		d_helper = stod(m_output);
-		result = d_helper;
-		d_helper = 0.0;
-		stack3.push(result);
-	}
-	else
-	{
-		d_helper = 0.0;
-		s_helper = "";
-		for (unsigned int i = 0; i < m_output.length(); i++)
+	try {
+		if (noOperator(m_output))
 		{
+			d_helper = stod(m_output);
+			result = d_helper;
+			d_helper = 0.0;
+			stack3.push(result);
+		}
+		else
+		{
+			d_helper = 0.0;
+			s_helper = "";
+			for (unsigned int i = 0; i < m_output.length(); i++)
 			{
-				if (isdigit(m_output[i]) || (m_output[i]) == '.' || (m_output[i]) == '-' && (isdigit(m_output[i + 1])))
 				{
-					stack1.push(m_output[i]);
+					if (isdigit(m_output[i]) || (m_output[i]) == '.' || (m_output[i]) == '-' && (isdigit(m_output[i + 1])))
+					{
+						stack1.push(m_output[i]);
 
-				}
-				else if ((m_output[i] == ' ') && (isdigit(m_output[i - 1])))
-				{
-					while (!stack1.empty())
-					{
-						stack2.push(stack1.top());
-						stack1.pop();
 					}
-					while (!stack2.empty())
+					else if ((m_output[i] == ' ') && (isdigit(m_output[i - 1])))
 					{
-						s_helper += stack2.top();
-						stack2.pop();
-					}
-
-					d_helper = stod(s_helper);
-					s_helper = "";
-					stack3.push(d_helper);
-					d_helper = 0.0;
-				}
-				else if (isOperator(m_output[i]) || (m_output[i] == 'r'))
-				{
-					if (m_output[i] == 'r')
-					{
-						lValue = stack3.top();
-						stack3.pop();
-						if (lValue < 0)
+						while (!stack1.empty())
 						{
-							throw (OwnException("Negative Root"));
+							stack2.push(stack1.top());
+							stack1.pop();
 						}
-						result = sqrt(lValue);
-						stack3.push(result);
-					}
-					else if (m_output[i] == '+')
-					{
-						rValue = stack3.top();
-						stack3.pop();
-						lValue = stack3.top();
-						stack3.pop();
-						result = lValue + rValue;
-						stack3.push(result);
-					}
-					else if (m_output[i] == '-')
-					{
-						rValue = stack3.top();
-						stack3.pop();
-						lValue = stack3.top();
-						stack3.pop();
-						result = lValue - rValue;
-						stack3.push(result);
-					}
-					else if (m_output[i] == '*')
-					{
-						rValue = stack3.top();
-						stack3.pop();
-						lValue = stack3.top();
-						stack3.pop();
-						result = lValue * rValue;
-						stack3.push(result);
-					}
-					else if (m_output[i] == '/')
-					{
-						rValue = stack3.top();
-						stack3.pop();
-						lValue = stack3.top();
-						stack3.pop();
-						if (rValue == 0) {
-							throw (OwnException("Division by Zero"));
+						while (!stack2.empty())
+						{
+							s_helper += stack2.top();
+							stack2.pop();
 						}
-						else {
-							result = lValue / rValue;
+
+						d_helper = stod(s_helper);
+						s_helper = "";
+						stack3.push(d_helper);
+						d_helper = 0.0;
+					}
+					else if (isOperator(m_output[i]) || (m_output[i] == 'r'))
+					{
+						if (m_output[i] == 'r')
+						{
+							lValue = stack3.top();
+							stack3.pop();
+							if (lValue < 0)
+							{
+								throw (OwnException("Negative Root"));
+							}
+							result = sqrt(lValue);
 							stack3.push(result);
 						}
-					}
-					else if (m_output[i] == '^')
-					{
-						rValue = stack3.top();
-						stack3.pop();
-						lValue = stack3.top();
-						stack3.pop();
-						result = pow(lValue, rValue);
-						stack3.push(result);
+						else if (m_output[i] == '+')
+						{
+							rValue = stack3.top();
+							stack3.pop();
+							lValue = stack3.top();
+							stack3.pop();
+							result = lValue + rValue;
+							stack3.push(result);
+						}
+						else if (m_output[i] == '-')
+						{
+							rValue = stack3.top();
+							stack3.pop();
+							lValue = stack3.top();
+							stack3.pop();
+							result = lValue - rValue;
+							stack3.push(result);
+						}
+						else if (m_output[i] == '*')
+						{
+							rValue = stack3.top();
+							stack3.pop();
+							lValue = stack3.top();
+							stack3.pop();
+							result = lValue * rValue;
+							stack3.push(result);
+						}
+						else if (m_output[i] == '/')
+						{
+							rValue = stack3.top();
+							stack3.pop();
+							lValue = stack3.top();
+							stack3.pop();
+							if (rValue == 0) {
+								throw (OwnException("Division by Zero"));
+							}
+							else {
+								result = lValue / rValue;
+								stack3.push(result);
+							}
+						}
+						else if (m_output[i] == '^')
+						{
+							rValue = stack3.top();
+							stack3.pop();
+							lValue = stack3.top();
+							stack3.pop();
+							result = pow(lValue, rValue);
+							stack3.push(result);
+						}
 					}
 				}
 			}
 		}
+		endresult = stack3.top();
 	}
-	endresult = stack3.top();
+	catch (const OwnException & e)
+	{
+		qDebug() << e.what();
+	}
+	catch (std::exception e)
+	{
+		throw(OwnException("wrong Parameter!"));
+		msg = QString::fromStdString("Unknown Error: " + string(e.what()));
+		qDebug() << msg;
+	}
 	return endresult;
 }
