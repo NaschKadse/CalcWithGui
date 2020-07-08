@@ -1,12 +1,12 @@
 ﻿#include "CalcWithGui.h"
 
-
 std::stack <char> stack;
-string Infix;
-double result;
-History histo(Infix, result);
-int counterCalculation = -1;
-int indexHisto = 0;
+std::string Infix;
+double result; // Gesamtergebnis
+History histo(Infix, result); 
+int counterCalculation = -1; // Aktueller Stand im Vektor, wird zu beginn jeder Calculation hochgezählt.
+int indexHisto = 0; // Hisory Anzeige wird hoch und runter geschaltet
+bool debug = false; // Debug Meldungen anzeigen
 
 
 
@@ -52,7 +52,7 @@ void CalcWithGui::button_pressed()
     }
     else
     {
-        string h = (button->text()).toStdString();
+        std::string h = (button->text()).toStdString();
         char Zeichen = h[0];
 
         if (isdigit(Zeichen))
@@ -122,6 +122,7 @@ void CalcWithGui::on_pushButton_delete_released()
     label_term = ui.label_term->text();
     label_result = ui.label_result->text();
 
+    //Bestimmte Zeichen dürfen nur zusammen gelöscht werden
     if ((label_term.size() > 0) && !(label_result.size() > 0))
     {
         //Behandlung von Wurzeln
@@ -145,12 +146,14 @@ void CalcWithGui::on_pushButton_delete_released()
                 }
                 else
                 {
+                    //behandlung von Potenzen
                     if ((label_term.size() > 1) && (label_term[label_term.size() - 2] == ("^")) && (label_term[label_term.size() - 1] == ("(")))
                     {
                         label_term.resize(label_term.size() - 2);
                     }
                     else
                     {
+                        //kein Sonderfall löscht nur das letzte Zeichen
                         label_term.resize(label_term.size() - 1);
                     }
                 }
@@ -160,6 +163,7 @@ void CalcWithGui::on_pushButton_delete_released()
     }
     else 
     {
+        //falls etwas in Result steht wird dies gelöscht um mit der Rechnung fortfahren zu können
         ui.label_result->setText("");
     }
 }
@@ -178,7 +182,6 @@ void CalcWithGui::on_pushButton_result_released()
     double help;
     bool errorStatus;
     QString msg;
-    bool debug = true;
 
     try {
         errorStatus = false;
@@ -187,11 +190,11 @@ void CalcWithGui::on_pushButton_result_released()
         Infix = label_term.toStdString();
         if(counterCalculation >= 0)
         {
-            Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Ohne Ans
+            Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Übergabe das Infix und das ERgebnis der alten Rechnung um damit weiterrechnen zu können
         }
         else
         {
-            Infix = check.checkInfix(Infix, 0.0);
+            Infix = check.checkInfix(Infix, 0.0); // Existiert keine History wird mit 0 gerechnet
         }
         if (debug)
         {
@@ -199,7 +202,7 @@ void CalcWithGui::on_pushButton_result_released()
             qDebug() << msg;
         }
         RPN ItoP(Infix);
-        std:string Postfix = ItoP.infixToPostfix(stack, Infix);
+        std::string Postfix = ItoP.infixToPostfix(stack, Infix);
 
         if (debug)
         {
@@ -210,7 +213,7 @@ void CalcWithGui::on_pushButton_result_released()
         result = Calculation1.calc(Postfix);
         if (debug)
         {
-            msg = QString::fromStdString("Result: " + to_string(result));
+            msg = QString::fromStdString("Result: " + std::to_string(result));
             qDebug() << msg;
         }
         label_term = QString::number(result, 'g',10); //Präzision von 10
@@ -224,7 +227,7 @@ void CalcWithGui::on_pushButton_result_released()
     }
     catch (std::exception e)
     {
-        msg = QString::fromStdString("Unknown Error: " + string(e.what()));
+        msg = QString::fromStdString("Unknown Error: " + std::string(e.what()));
         qDebug() << msg;
         ui.label_result->setText(msg);
         errorStatus = true;
@@ -244,7 +247,7 @@ void CalcWithGui::on_pushButton_up_released()
 {
     QString label_term;
     QString label_result;
-    string infixHisto;
+    std::string infixHisto;
     double resultHisto;
 
     if (indexHisto > 0)
@@ -266,7 +269,7 @@ void CalcWithGui::on_pushButton_down_released()
 {
     QString label_term;
     QString label_result;
-    string infixHisto;
+    std::string infixHisto;
     double resultHisto;
 
     if (indexHisto < counterCalculation)

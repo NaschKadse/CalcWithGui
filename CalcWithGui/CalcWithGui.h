@@ -2,18 +2,20 @@
 #define CALCWITHGUI_H
 
 #include <QtWidgets/QMainWindow>
-#include "ui_CalcWithGui.h"
 #include <QString>
 #include <QDebug>
 #include <string>
+#include <stack>
+
 #include "Calculator.h"
 #include "OwnException.h"
 #include "Calculation.h"
 #include "RPN.h"
 #include "History.h"
 #include "InputCheck.h"
-#include <stack>
 #include "dynamicfontsizelabel.h"
+#include "ui_CalcWithGui.h"
+
 
 class CalcWithGui : public QMainWindow
 {

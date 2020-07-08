@@ -1,26 +1,23 @@
 #ifndef INPUTCHECK_H
 #define INPUTCHECK_H
 
-#include "Calculation.h"
-#include "RPN.h"
-#include <iostream>
-#include <string>
-#include "OwnException.h"
 #include <qstring.h>
 #include <QDebug>
 #include <stack>
 #include <cmath>
 #include <math.h>
-#include <iomanip>
+#include <string>
 
-using namespace std;
+#include "Calculation.h"
+#include "RPN.h"
+#include "OwnException.h"
 
 class InputCheck
 {
 	public:
-		InputCheck(string infix);
+		InputCheck(std::string infix);
 		~InputCheck();
-		string checkInfix(string infix, double res);
+		std::string checkInfix(std::string infix, double res);
 
 	protected:
 

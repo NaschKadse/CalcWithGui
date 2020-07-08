@@ -1,7 +1,6 @@
 #include "Calculation.h"
 
-
-Calculation::Calculation(string output) : m_output(output)
+Calculation::Calculation(std::string output) : m_output(output)
 {
 
 }
@@ -19,12 +18,12 @@ double error0_exeption(double t) {
 	}
 }
 
-double Calculation::calc(string m_output)
+double Calculation::calc(std::string m_output)
 {
-	stack <char> stack1;		// reversed stack
-	stack <char> stack2;		// reversed (reversed stack) = normal stack
-	stack <double> stack3;		// char to double stack
-	string s_helper = "";		// variable to divide output string into pieces
+	std::stack <char> stack1;		// reversed stack
+	std::stack <char> stack2;		// reversed (reversed stack) = normal stack
+	std::stack <double> stack3;		// char to double stack
+	std::string s_helper = "";		// variable to divide output string into pieces
 	double d_helper = 0.0;		// variable to store substring as double
 	double lValue = 0.0;		// left Calculation Value
 	double rValue = 0.0;		// right Calculation Value

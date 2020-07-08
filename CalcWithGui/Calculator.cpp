@@ -5,7 +5,7 @@ Calculator::Calculator()
 {
 
 }
-Calculator::Calculator(string input)
+Calculator::Calculator(std::string input)
 {
 
 }
@@ -25,10 +25,10 @@ bool Calculator::isOperator(char c)
 	}
 }
 
-bool Calculator::noOperator(string output)
+bool Calculator::noOperator(std::string output)
 {
 	bool check = true;
-	//std::cout << "Use noOperator" << endl; //Test
+
 	for (unsigned int i = 0; i < output.length(); i++)
 	{
 		if (i == 0 && output[i] == '-')

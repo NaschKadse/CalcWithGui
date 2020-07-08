@@ -1,24 +1,26 @@
 #ifndef RPN_H
 #define RPN_H
 
-#include "Calculator.h"
 #include <string>
 #include <iostream>
 #include <stack>
+
+#include "Calculator.h"
+
 
 class RPN :
 	public Calculator
 {
 public:
 
-	RPN(string infix);
+	RPN(std::string infix);
 
 	~RPN();
 
-	string m_infix;
+	std::string m_infix;
 
 	int precedence(char c);
-	string infixToPostfix(stack<char>stack, string infix);
+	std::string infixToPostfix(std::stack<char>stack, std::string infix);
 
 protected:
 

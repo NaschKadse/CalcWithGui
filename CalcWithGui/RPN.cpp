@@ -1,6 +1,6 @@
 #include "RPN.h"
 
-RPN::RPN(string m_infix) : m_infix(m_infix)
+RPN::RPN(std::string m_infix) : m_infix(m_infix)
 {
 
 }
@@ -34,13 +34,13 @@ int RPN::precedence(char c)
 	}
 }
 
-string RPN::infixToPostfix(stack<char>stack, string m_infix)
+std::string RPN::infixToPostfix(std::stack<char>stack, std::string m_infix)
 {
 
-	string postfix;
-	string postpostfix;
-	string test;
-	string spacer = " ";
+	std::string postfix;
+	std::string postpostfix;
+	std::string test;
+	std::string spacer = " ";
 
 	for (int i = 0; i < m_infix.length(); i++)
 	{
@@ -49,15 +49,10 @@ string RPN::infixToPostfix(stack<char>stack, string m_infix)
 			m_infix[i] = 'u';
 		}
 
-		if (m_infix[i] >= '0' && m_infix[i] <= '9' || m_infix[i] == '.'/* || i == 0 && m_infix[i] == '-' && m_infix[i + 1] != '('*/)
+		if (m_infix[i] >= '0' && m_infix[i] <= '9' || m_infix[i] == '.')
 		{
 			postfix += m_infix[i];
 		}
-
-	/*	if (i > 0 && m_infix[i - 1] == '(' && m_infix[i] == '-')
-		{
-			postfix += m_infix[i];
-		}*/
 
 		//Pre Numeric Spacer
 		if ((isdigit(m_infix[i]) && isOperator(m_infix[i + 1])) || (m_infix[i] == ')' && (isOperator(m_infix[i + 1]) || m_infix[i + 1] == 'r')))

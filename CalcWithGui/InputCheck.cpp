@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "InputCheck.h"
 
-InputCheck::InputCheck(string infix)
+InputCheck::InputCheck(std::string infix)
 {
 
 }
@@ -10,24 +10,19 @@ InputCheck::~InputCheck()
 
 }
 
-string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter double res um mit Ans rechnen zu können
+std::string InputCheck::checkInfix(std::string infix, double res)
 {
-	Calculator cal;
-	stack<char> Stack1;
-	bool rightInfix = true;
-	int pointCounter = 0;
-	int counterOperator = 0;
-	int counterKlammeropen = 0;
-	int SQRcounterKlammeropen = 0;
-	int counterKlammerclose = 0;
-	int SQRcounterKlammerclose = 0;
-	string help;
-	const bool debug = true;
-	string root;
-	double resultroot;
-	QString msg;
+	Calculator cal; //Hilfsobjekt um inOperator verwenden zu können
+	std::stack<char> StackKlammeropen; // Zwischenspeicher für die offenen Klammern
+	bool rightInfix = true; // Status ob der Infix korrekt ist/war oder nicht
+	int pointCounter = 0; // Zähler für die vorhandenen Punkte zwischen zwei Operatoren
+	int counterOperator = 0; //Anzahl Operatoren zwischen 2 Zahlen
+	std::string help; //String Zwischnenspeicher
+	std::string root; //Alles unter der Wurzel
+	double resultroot; //Ergebnis  der Wurzelrechnung
+	QString msg; // debugg message
+	const bool debug = false; //Anzeige der Debugg Meldungen
 
-	using namespace std;
 	if (debug)
 	{
 		qDebug() << "-------------------------------------------------";
@@ -45,10 +40,10 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 		}
 		if (infix[i] == '(') // Klammern behandeln
 		{
-			Stack1.push(infix[i]);
+			StackKlammeropen.push(infix[i]);
 			if (debug)
 			{
-				msg = QString::fromStdString(to_string(i) + " Klammer ( auf Stack: " + infix);
+				msg = QString::fromStdString(std::to_string(i) + " Klammer ( auf Stack: " + infix);
 				qDebug() << msg;
 			}
 		}
@@ -59,12 +54,12 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 
 			if (debug)
 			{
-				msg = QString::fromStdString(to_string(i) + " Klammer ): " + infix);
+				msg = QString::fromStdString(std::to_string(i) + " Klammer ): " + infix);
 				qDebug() << msg;
 			}
-			if (!Stack1.empty())
+			if (!StackKlammeropen.empty())
 			{
-				Stack1.pop();
+				StackKlammeropen.pop();
 			}
 			else
 			{
@@ -76,7 +71,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 
 		if ((infix[i] == 'A') && (infix[i + 1] == 'n') && (infix[i + 2] == 's')) //Result 
 		{
-			help = to_string(res);
+			help = std::to_string(res);
 			infix = infix.erase(i, 3);
 			if ((i >= 1) && (isdigit(infix[i - 1])))
 			{
@@ -155,6 +150,8 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 			{
 				i = 0;
 			}
+			msg = QString::fromStdString(std::to_string(i) + " " + infix[i] + "   " + std::to_string(counterOperator) +"   " + infix);
+			qDebug() << msg;
 
 		}
 		//Ende Wurzel
@@ -253,7 +250,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 					{
 						if (debug)
 						{
-							msg = QString::fromStdString(to_string(i) + " Error: " + infix);
+							msg = QString::fromStdString(std::to_string(i) + " Error: " + infix);
 							qDebug() << msg;
 						}
 						throw (OwnException("double Operator"));
@@ -430,10 +427,10 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 		rightInfix = false;
 	}
 
-	while (!Stack1.empty()) // Klammer ) zu wenig
+	while (!StackKlammeropen.empty()) // Klammer ) zu wenig
 	{
 		infix += ')';
-		Stack1.pop();
+		StackKlammeropen.pop();
 		rightInfix = false;
 		if (debug)
 		{
