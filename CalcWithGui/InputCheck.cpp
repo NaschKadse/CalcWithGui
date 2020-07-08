@@ -217,7 +217,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 							}
 							i=i-2;
 						}
-						counterOperator = 1;
+						counterOperator = 0;
 					}
 
 					else if ((i>0) && cal.isOperator(infix[i]) && cal.isOperator(infix[i-1]))
@@ -250,7 +250,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 					{
 						if (debug)
 						{
-							msg = QString::fromStdString(std::to_string(i) + " Error: " + infix);
+							msg = QString::fromStdString(std::to_string(i) + " Error: " + infix + " Anzahl Operatoren: "+std::to_string(counterOperator));
 							qDebug() << msg;
 						}
 						throw (OwnException("double Operator"));
