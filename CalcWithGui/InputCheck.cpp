@@ -55,6 +55,9 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 			}
 			if (infix[i] == ')')
 			{
+				counterOperator = 0;
+				pointCounter = 0;
+
 				if (debug)
 				{
 					msg = QString::fromStdString(to_string(i) + " Klammer ): " + infix);
@@ -271,7 +274,8 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 
 					}
 
-					if ((counterOperator == 1) && (infix[i + 1] == '.')) //Ausnahme bei Operator und . : +.x --> +0.x
+					//Ausnahme bei Operator und . : +.x --> +0.x
+					if ((counterOperator == 1) && (infix[i + 1] == '.')) 
 					{
 						infix = infix.insert((i + 1), "0");
 						rightInfix = false;
@@ -307,7 +311,9 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 								qDebug() << msg;
 							}
 						}
-						if ((cal.isOperator(infix[i + 1])) || (infix[i + 1] == '(') || (infix[i + 1] == ')')) //. Vor Operator oder Klammer wird gelöscht
+
+						//. Vor Operator oder Klammer wird gelöscht
+						if ((cal.isOperator(infix[i + 1])) || (infix[i + 1] == '(') || (infix[i + 1] == ')')) 
 						{
 							infix = infix.erase(i, 1);
 							i--; //String wird verschoben, deshalb muss der Index mit verchoben werden
@@ -334,27 +340,30 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 					else
 					{
 						//Klammer Behandlung
-						if ((infix[i] == ')') && (i != infix.length() - 1) && (isdigit(infix[i + 1]) || (isalpha(infix[i + 1]))) && (infix[i - 1] != '(')) // Behandlung )x --> )*x
+
+						// Behandlung )x --> )*x
+						if ((infix[i] == ')') && (i != infix.length() - 1) && (isdigit(infix[i + 1]) || (isalpha(infix[i + 1]))) && (infix[i - 1] != '(')) 
 						{
 							infix = infix.insert((i + 1), "*");
 							i++;
 							rightInfix = false;
 							if (debug)
 							{
-								msg = QString::fromStdString(std::to_string(i) + " Klammer 2: " + infix);
+								msg = QString::fromStdString(std::to_string(i) + " Klammer 1: " + infix);
 								qDebug() << msg;
 							}
 						}
 						else
 						{
-							if ((infix[i] == '(') && (i != 0) && (isdigit(infix[i - 1]) || (infix[i - 1] == 'p') || (infix[i - 1] == ')')) && (infix[i + 1] != ')') && (i != (infix.size() - 1))) //Behandlung x( --> x*(
+							//Behandlung x( --> x*(
+							if ((infix[i] == '(') && (i != 0) && (isdigit(infix[i - 1]) || (infix[i - 1] == 'p') || (infix[i - 1] == ')')) && (infix[i + 1] != ')') && (i != (infix.size() - 1))) 
 							{
 								infix = infix.insert(i, "*");
 								i++;
 								rightInfix = false;
 								if (debug)
 								{
-									msg = QString::fromStdString(std::to_string(i) + " Klammer 3: " + infix);
+									msg = QString::fromStdString(std::to_string(i) + " Klammer 2: " + infix);
 									qDebug() << msg;
 								}
 							}
@@ -365,20 +374,20 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 								rightInfix = false;
 								if (debug)
 								{
-									msg = QString::fromStdString(std::to_string(i) + " Klammer 4: " + infix);
+									msg = QString::fromStdString(std::to_string(i) + " Klammer 3: " + infix);
 									qDebug() << msg;
 								}
 							}
 
-
-							else if ((infix[i] == ')') && (i != 0) && (infix[i - 1] == '(')) //Löschen einer leeren Klammer ()
+							//Löschen einer leeren Klammer ()
+							else if ((infix[i] == ')') && (i != 0) && (infix[i - 1] == '(')) 
 							{
 								infix = infix.erase((i - 1), 2);
 								i--;
 								rightInfix = false;
 								if (debug)
 								{
-									msg = QString::fromStdString(std::to_string(i) + " Klammer 5: " + infix);
+									msg = QString::fromStdString(std::to_string(i) + " Klammer 4.1: " + infix);
 									qDebug() << msg;
 								}
 								if ((i != 0) && (infix[i] == '*') && (cal.isOperator(infix[i - 1])))
@@ -388,7 +397,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 									rightInfix = false;
 									if (debug)
 									{
-										msg = QString::fromStdString(std::to_string(i) + " Klammer 6: " + infix);
+										msg = QString::fromStdString(std::to_string(i) + " Klammer 4.2: " + infix);
 										qDebug() << msg;
 									}
 								}
@@ -399,7 +408,7 @@ string InputCheck::checkInfix(string infix, double res) //zusätzlicher Parameter
 									rightInfix = false;
 									if (debug)
 									{
-										msg = QString::fromStdString(std::to_string(i) + " Klammer 7: " + infix);
+										msg = QString::fromStdString(std::to_string(i) + " Klammer 4.3: " + infix);
 										qDebug() << msg;
 									}
 								}
