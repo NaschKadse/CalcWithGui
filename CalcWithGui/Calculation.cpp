@@ -87,6 +87,13 @@ double Calculation::calc(string m_output)
 						result = sqrt(lValue);
 						stack3.push(result);
 					}
+					else if (m_output[i] == 'u')
+					{
+						lValue = stack3.top();
+						stack3.pop();
+						result = (-1)*(lValue);
+						stack3.push(result);
+					}
 					else
 					{
 						if (stack3.empty())

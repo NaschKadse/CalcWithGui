@@ -15,7 +15,7 @@ Calculator::~Calculator()
 }
 bool Calculator::isOperator(char c)
 {
-	if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^')
+	if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'u')
 	{
 		return true;
 	}

@@ -12,7 +12,11 @@ RPN::~RPN()
 // Operator precedence function
 int RPN::precedence(char c)
 {
-	if (c == '^' || c == 'r')
+	if (c == 'u')
+	{
+		return 4;
+	}
+	else if (c == '^' || c == 'r')
 	{
 		return 3;
 	}
@@ -40,15 +44,20 @@ string RPN::infixToPostfix(stack<char>stack, string m_infix)
 
 	for (int i = 0; i < m_infix.length(); i++)
 	{
-		if (m_infix[i] >= '0' && m_infix[i] <= '9' || m_infix[i] == '.' || i == 0 && m_infix[i] == '-' && m_infix[i + 1] != '(')
+		if ((i==0 && m_infix[i] == '-') || (m_infix[i] == '-' && m_infix[i - 1] == '('))
+		{
+			m_infix[i] = 'u';
+		}
+
+		if (m_infix[i] >= '0' && m_infix[i] <= '9' || m_infix[i] == '.'/* || i == 0 && m_infix[i] == '-' && m_infix[i + 1] != '('*/)
 		{
 			postfix += m_infix[i];
 		}
 
-		if (i > 0 && m_infix[i - 1] == '(' && m_infix[i] == '-')
+	/*	if (i > 0 && m_infix[i - 1] == '(' && m_infix[i] == '-')
 		{
 			postfix += m_infix[i];
-		}
+		}*/
 
 		//Pre Numeric Spacer
 		if ((isdigit(m_infix[i]) && isOperator(m_infix[i + 1])) || (m_infix[i] == ')' && (isOperator(m_infix[i + 1]) || m_infix[i + 1] == 'r')))
@@ -78,7 +87,7 @@ string RPN::infixToPostfix(stack<char>stack, string m_infix)
 			}
 		}
 		// Operator Check
-		else if (((isOperator(m_infix[i]) && i > 0 && m_infix[i - 1] != '(') || m_infix[i] == 'r'))
+		else if (((isOperator(m_infix[i]) && i > 0 && m_infix[i - 1] != '(') || m_infix[i] == 'r'|| m_infix[i] == 'u'))
 		{
 			// Push Operator to Stack if stack is empty
 			if (stack.empty())
