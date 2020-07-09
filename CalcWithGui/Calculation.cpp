@@ -24,20 +24,7 @@ double error0_exeption(double t) {
 	}
 }
 
-double Calculation::Round(double Number, unsigned int decimals)
-{
-	Number *= pow(10, decimals);
-	if (Number >= 0)
-	{
-		floor(Number + 0.5);
-	}
-	else
-	{
-		ceil(Number - 0.5);
-	}
-	Number /= pow(10, decimals);
-	return Number;
-}
+
 
 double Calculation::calc(std::string m_output)
 {
@@ -52,7 +39,7 @@ double Calculation::calc(std::string m_output)
 	double endresult = 0.0;		// endresult
 	double round = 0.0;
 	QString msg;				// error message
-
+	std:fixed;
 	
 	if (noOperator(m_output))
 	{
@@ -142,7 +129,7 @@ double Calculation::calc(std::string m_output)
 						}
 						else if (m_output[i] == '*')
 						{
-							result = lValue * rValue;
+							result  = lValue * rValue;
 							result = Round(result, 5);
 							stack3.push(result);
 						}
@@ -167,6 +154,7 @@ double Calculation::calc(std::string m_output)
 		}
 	}
 	endresult = stack3.top();
+	endresult = Round(endresult, 6);
 	
 	return endresult;
 }
