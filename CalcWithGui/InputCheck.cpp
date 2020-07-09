@@ -187,10 +187,16 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 				{
 					counterOperator = 0;
 				}
-				if (((i == 0) && (infix[i] != '-')) || (i == (infix.size() - 1))) //einzelne Operatoren am Anfang und Ende werden gelöscht
+				if (((i == 0) && ((infix[i] != '-') || (infix[i] == '^'))) || (i == (infix.size() - 1))) //einzelne Operatoren am Anfang und Ende werden gelöscht
 				{
-					infix = infix.erase(i, 1);
-					i--; //String wird verschoben, deshalb muss der Index mit verchoben werden
+					if (infix[i] == '^')
+					{
+						throw (OwnException("wrong Input!"));
+					}
+					else {
+						infix = infix.erase(i, 1);
+						i--; //String wird verschoben, deshalb muss der Index mit verchoben werden
+					}
 					if (i < 0)
 					{
 						i = 0;
