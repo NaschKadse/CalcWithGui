@@ -328,6 +328,7 @@ void CalcWithGui::on_pushButton_potenz1_released()
 {
     QString label_term;
     QString label_result;
+    std::string h;
 
     label_result = ui.label_result->text();
 
@@ -337,8 +338,17 @@ void CalcWithGui::on_pushButton_potenz1_released()
     }
     else
     {
-        label_term = ui.label_result->text() + "^(-1)";
-        ui.label_result->setText("");
+        h = label_result.toStdString();
+        if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
+        {
+            label_term = (ui.label_result->text() + "^(-1)");
+            ui.label_result->setText("");
+        }
+        else
+        {
+            label_term = "^(-1)";
+            ui.label_result->setText("");
+        }
     }
     ui.label_term->setText(label_term);
 }
@@ -347,6 +357,7 @@ void CalcWithGui::on_pushButton_potenz2_released()
 {
     QString label_term;
     QString label_result;
+    std::string h;
 
     label_result = ui.label_result->text();
 
@@ -356,8 +367,17 @@ void CalcWithGui::on_pushButton_potenz2_released()
     }
     else
     {
-        label_term = ui.label_result->text() + "^(2)";
-        ui.label_result->setText("");
+        h = label_result.toStdString();
+        if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
+        {
+            label_term = (ui.label_result->text() + "^(2)");
+            ui.label_result->setText("");
+        }
+        else
+        {
+            label_term = "^(2)";
+            ui.label_result->setText("");
+        }
     }
     ui.label_term->setText(label_term);
 }
@@ -366,6 +386,7 @@ void CalcWithGui::on_pushButton_potenz3_released()
 {
     QString label_term;
     QString label_result;
+    std::string h;
 
     label_result = ui.label_result->text();
 
@@ -375,8 +396,17 @@ void CalcWithGui::on_pushButton_potenz3_released()
     }
     else
     {
-        label_term = ui.label_result->text() + "^(3)";
-        ui.label_result->setText("");
+        h = label_result.toStdString();
+        if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
+        {
+            label_term = (ui.label_result->text() + "^(3)");
+            ui.label_result->setText("");
+        }
+        else
+        {
+            label_term = "^(3)";
+            ui.label_result->setText("");
+        }
     }
     ui.label_term->setText(label_term);
 }
