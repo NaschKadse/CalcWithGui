@@ -234,7 +234,7 @@ void CalcWithGui::on_pushButton_result_released()
         //ui.label_result->setText(label_term);
         if (result < 1 && result > (-1))
         {
-            ui.label_result->setText(label_term.setNum(result, 'f', 11));
+            ui.label_result->setText(label_term.setNum(result, 'f', 6));
             msg = QString::fromStdString("Funktion1");
             qDebug() << msg;
         }
