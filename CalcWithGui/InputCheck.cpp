@@ -21,7 +21,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	std::string root; //Alles unter der Wurzel
 	double resultroot; //Ergebnis  der Wurzelrechnung
 	QString msg; // debugg message
-	const bool debug = true; //Anzeige der Debugg Meldungen
+	const bool debug = false; //Anzeige der Debugg Meldungen
 	int digitCounter = 0;
 
 	if (debug)

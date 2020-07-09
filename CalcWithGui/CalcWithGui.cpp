@@ -6,7 +6,7 @@ double result; // Gesamtergebnis
 History histo(Infix, result); 
 int counterCalculation = -1; // Aktueller Stand im Vektor, wird zu beginn jeder Calculation hochgezählt.
 int indexHisto = 0; // Hisory Anzeige wird hoch und runter geschaltet
-bool debug = true; // Debug Meldungen anzeigen
+bool debug = false; // Debug Meldungen anzeigen
 
 
 
