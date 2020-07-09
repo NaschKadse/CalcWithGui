@@ -47,23 +47,37 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		if (!StackKlammeropen.empty() && !containsDigit)
 		{
 			containsDigit = isdigit(infix[i]);
+			if (debug)
+			{
+				msg = QString::fromStdString(std::to_string(i) + " found digit: " + infix[i]);
+				qDebug() << msg;
+			}
 		}
-		else if (infix[i] == '(')
+		if ((infix[i] == ')' || infix[i] == '(') && !StackKlammeropen.empty())
+		{
+			StackKlammeropen.pop();
+			if (debug)
+			{
+				msg = QString::fromStdString(std::to_string(i) + " Error: " + infix);
+				qDebug() << msg;
+			}
+			if (!containsDigit) {
+				throw (OwnException("Syntax error 1"));
+			}
+		}
+		if (infix[i] == '(')
 		{
 			StackKlammeropen.push(infix[i]);
 			containsDigit = false;
-		}
-		if (infix[i] == ')' || (infix[i] == '(' && !StackKlammeropen.empty()))
-		{
-			StackKlammeropen.pop();
-			if (!containsDigit) {
-				throw (OwnException("Syntax error"));
+			if (debug)
+			{
+				msg = QString::fromStdString(std::to_string(i)+" Klammer (: " + infix[i]);
+				qDebug() << msg;
 			}
 		}
-
 	}
 	if (digitCounter == 0/*counterOperator == infix.size()*/) {
-		throw (OwnException("Syntax error"));
+		throw (OwnException("Syntax error 2"));
 	}
 	/*counterOperator = 0;*/
 	digitCounter = 0;
