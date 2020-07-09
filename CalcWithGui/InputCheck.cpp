@@ -22,6 +22,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	double resultroot; //Ergebnis  der Wurzelrechnung
 	QString msg; // debugg message
 	const bool debug = true; //Anzeige der Debugg Meldungen
+	int digitCounter = 0;
 
 	if (debug)
 	{
@@ -33,15 +34,21 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	
 	for (int i = 0; i < int(infix.length()); i++)
 	{
-		if (cal.isOperator(infix[i]))
+		//if (cal.isOperator(infix[i])/* && (infix[i]) != 'r'*/) // Obacht
+		//{
+		//	counterOperator++;
+		//}
+		if(isdigit(infix[i]))
 		{
-			counterOperator++;
+			digitCounter++;
 		}
+
 	}
-	if (counterOperator == infix.size()) {
+	if (digitCounter == 0/*counterOperator == infix.size()*/) {
 		throw (OwnException("no Digit"));
 	}
-	counterOperator = 0;
+	/*counterOperator = 0;*/
+	digitCounter = 0;
 
 	for (int i = 0; i < int(infix.length()); i++)
 	{
