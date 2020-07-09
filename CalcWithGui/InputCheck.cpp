@@ -36,7 +36,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	bool containsDigit = false;
 	for (int i = 0; i < int(infix.length()); i++)
 	{
-		if((isdigit(infix[i])) || (infix[i] == 'p') || (infix[i] == 'r'))
+		if((isdigit(infix[i])) || (infix[i] == 'p') || (infix[i] == 'r') || (infix[i] == 'A'))
 		{
 			digitCounter++;
 			if (!StackKlammeropen.empty() && !containsDigit)
@@ -122,9 +122,43 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 			}
 			else
 			{
-				throw(OwnException("too much )"));
+				throw(OwnException("Syntax Error"));
 			}
 		}
+
+		// Einfügen um mit vorherigem Ergebnis als Ans weiterrechne zu können
+
+		if ((infix[i] == 'A') && (infix[i + 1] == 'n') && (infix[i + 2] == 's')) //Result 
+		{
+			help = std::to_string(res);
+			infix = infix.erase(i, 3);
+			if ((i >= 1) && (isdigit(infix[i - 1])))
+			{
+				help = "*" + help;
+				if (debug)
+				{
+					msg = QString::fromStdString(std::to_string(i) + " old Result1: " + infix);
+					qDebug() << msg;
+				}
+			}
+			if (isdigit(infix[i]))
+			{
+				help = help + "*";
+				if (debug)
+				{
+					msg = QString::fromStdString(std::to_string(i) + " old Result2: " + infix);
+					qDebug() << msg;
+				}
+			}
+			infix = infix.insert(i, help);
+
+			if (debug)
+			{
+				msg = QString::fromStdString(std::to_string(i) + " old Result3: " + infix);
+				qDebug() << msg;
+			}
+		}
+		//End Ans
 
 		if ((infix[i] == 'p') && (infix[i + 1] == 'i')) //Pi
 		{
@@ -139,12 +173,14 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 			}
 
 			double pi = M_PI;
-			//help = to_string(M_PI);
+
 			QString piString;
 			piString = QString::number(pi, 'g', 6); //Präzision von 6
 			help = piString.toStdString();
+
 			infix = infix.erase(i, 2);
 			infix = infix.insert(i, help);
+
 			if (debug)
 			{
 				msg = QString::fromStdString(std::to_string(i) + " pi 2: " + infix);
@@ -167,14 +203,6 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		if ((infix[i] == 's') && (infix[i + 1] == 'q') && (infix[i + 2] == 'r')) //Root
 		{
 			infix = infix.erase(i, 2);
-			/*if (i >= 2)
-			{
-				i--;
-			}
-			else
-			{
-				i = 0;
-			}*/
 			msg = QString::fromStdString(std::to_string(i) + " " + infix[i] + "   " + std::to_string(counterOperator) +"   " + infix);
 			qDebug() << msg;
 
