@@ -52,7 +52,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 			}
 		}
 		
-		if ((infix[i] == ')' || infix[i] == '(' || (i == (infix.size()-1))) && !StackKlammeropen.empty())
+		if ((infix[i] == ')' || (i == (infix.size()-1))) && !StackKlammeropen.empty())
 		{
 			if (!(i == (infix.size() + 1)))
 			{
@@ -82,6 +82,8 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		throw (OwnException("Syntax error 2"));
 	}
 	digitCounter = 0;
+
+	//Offene Klammern schlieﬂen
 	while (!StackKlammeropen.empty())
 	{
 		StackKlammeropen.pop();
