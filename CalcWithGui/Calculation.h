@@ -15,6 +15,7 @@ public:
 	Calculation(std::string output);
 	~Calculation();
 	double calc(std::string output);
+	double Round(double Number, int decimals);
 
 protected:
 

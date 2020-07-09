@@ -9,6 +9,12 @@ Calculation::~Calculation()
 
 }
 
+double Calculation::Round(double Number, int decimals)
+{
+	double v[] = { 1, 10, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8 };  // mgl. verlängern
+	return floor(Number * v[decimals] + 0.5) / v[decimals];
+}
+
 double error0_exeption(double t) {
 	if (t == 0) {
 		throw std::string("Math error: Division by Zero");
@@ -44,6 +50,7 @@ double Calculation::calc(std::string m_output)
 	double rValue = 0.0;		// right Calculation Value
 	double result = 0.0;		// intermediate result
 	double endresult = 0.0;		// endresult
+	double round = 0.0;
 	QString msg;				// error message
 
 	
@@ -136,7 +143,7 @@ double Calculation::calc(std::string m_output)
 						else if (m_output[i] == '*')
 						{
 							result = lValue * rValue;
-							//Round(result, 0);
+							result = Round(result, 5);
 							stack3.push(result);
 						}
 						else if (m_output[i] == '/')
