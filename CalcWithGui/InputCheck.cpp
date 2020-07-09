@@ -36,23 +36,21 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	bool containsDigit = false;
 	for (int i = 0; i < int(infix.length()); i++)
 	{
-		//if (cal.isOperator(infix[i])/* && (infix[i]) != 'r'*/) // Obacht
-		//{
-		//	counterOperator++;
-		//}
-		if(isdigit(infix[i]))
+		if((isdigit(infix[i])) || (infix[i] == 'p') || (infix[i] == 'r'))
 		{
 			digitCounter++;
-		}
-		if (!StackKlammeropen.empty() && !containsDigit)
-		{
-			containsDigit = isdigit(infix[i]);
-			if (debug)
+			if (!StackKlammeropen.empty() && !containsDigit)
 			{
-				msg = QString::fromStdString(std::to_string(i) + " found digit: " + infix[i]);
-				qDebug() << msg;
+				containsDigit = true;
+
+				if (debug)
+				{
+					msg = QString::fromStdString(std::to_string(i) + " found digit: " + infix[i]);
+					qDebug() << msg;
+				}
 			}
 		}
+		
 		if ((infix[i] == ')' || infix[i] == '(') && !StackKlammeropen.empty())
 		{
 			StackKlammeropen.pop();
@@ -76,10 +74,9 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 			}
 		}
 	}
-	if (digitCounter == 0/*counterOperator == infix.size()*/) {
+	if (digitCounter == 0) {
 		throw (OwnException("Syntax error 2"));
 	}
-	/*counterOperator = 0;*/
 	digitCounter = 0;
 	while (!StackKlammeropen.empty())
 	{
@@ -129,40 +126,6 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 			}
 		}
 
-		// Einfügen um mit vorherigem Ergebnis als Ans weiterrechne zu können
-
-		if ((infix[i] == 'A') && (infix[i + 1] == 'n') && (infix[i + 2] == 's')) //Result 
-		{
-			help = std::to_string(res);
-			infix = infix.erase(i, 3);
-			if ((i >= 1) && (isdigit(infix[i - 1])))
-			{
-				help = "*" + help;
-				if (debug)
-				{
-					msg = QString::fromStdString(std::to_string(i) + " old Result1: " + infix);
-					qDebug() << msg;
-				}
-			}
-			if (isdigit(infix[i]))
-			{
-				help = help + "*";
-				if (debug)
-				{
-					msg = QString::fromStdString(std::to_string(i) + " old Result2: " + infix);
-					qDebug() << msg;
-				}
-			}
-			infix = infix.insert(i, help);
-
-			if (debug)
-			{
-				msg = QString::fromStdString(std::to_string(i) + " old Result3: " + infix);
-				qDebug() << msg;
-			}
-		}
-		//End Ans
-
 		if ((infix[i] == 'p') && (infix[i + 1] == 'i')) //Pi
 		{
 			if ((i <= (infix.size() - 2)) && (isdigit(infix[i + 2])))
@@ -204,14 +167,14 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		if ((infix[i] == 's') && (infix[i + 1] == 'q') && (infix[i + 2] == 'r')) //Root
 		{
 			infix = infix.erase(i, 2);
-			if (i >= 2)
+			/*if (i >= 2)
 			{
 				i--;
 			}
 			else
 			{
 				i = 0;
-			}
+			}*/
 			msg = QString::fromStdString(std::to_string(i) + " " + infix[i] + "   " + std::to_string(counterOperator) +"   " + infix);
 			qDebug() << msg;
 
@@ -229,7 +192,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		//Ende Ziffer
 		else
 		{
-			if (cal.isOperator(infix[i]) && infix[i] != 'r') //Behandlung von Operatoren
+			if (cal.isOperator(infix[i]) && (infix[i] != 'r')) //Behandlung von Operatoren
 			{
 				counterOperator++;
 				pointCounter = 0;
@@ -241,7 +204,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 				{
 					if (infix[i] == '^')
 					{
-						throw (OwnException("wrong Input!"));
+						throw (OwnException("Syntax Error"));
 					}
 					else {
 						infix = infix.erase(i, 1);
@@ -465,30 +428,6 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 								}
 								i--;
 							}
-
-							//tod? Klammer 4.2 & Klammer 4.3
-							if ((i > 0) && (infix[i] == '*') && (cal.isOperator(infix[i - 1])))
-							{ //Behandeln von falsch eingefügten Operatoren nach dem löschen der leeren Klammer
-								infix = infix.erase(i, 1);
-								i--;
-								rightInfix = false;
-								if (debug)
-								{
-									msg = QString::fromStdString(std::to_string(i) + " Klammer 4.3: " + infix);
-									qDebug() << msg;
-								}
-							}
-							else if ((i > 0) && (infix[i - 1] == '*') && ((cal.isOperator(infix[i])) || (isdigit(infix[i]))))
-							{
-								infix = infix.erase((i - 1), 1);
-								i--;
-								rightInfix = false;
-								if (debug)
-								{
-									msg = QString::fromStdString(std::to_string(i) + " Klammer 4.4: " + infix);
-									qDebug() << msg;
-								}
-							}
 						}
 					}
 				}
@@ -500,11 +439,6 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	{
 		infix = "0" + infix;
 		rightInfix = false;
-	}
-
-	if (infix == "")
-	{
-		throw (OwnException("Error: Empty Input"));
 	}
 
 	if (debug) {

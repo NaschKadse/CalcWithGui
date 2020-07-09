@@ -1064,7 +1064,7 @@ QPushButton:pressed {
      <string>^</string>
     </property>
     <property name="shortcut">
-     <string>°</string>
+     <string>E</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_potenz3">

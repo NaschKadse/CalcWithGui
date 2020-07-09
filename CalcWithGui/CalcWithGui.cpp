@@ -6,7 +6,7 @@ double result; // Gesamtergebnis
 History histo(Infix, result); 
 int counterCalculation = -1; // Aktueller Stand im Vektor, wird zu beginn jeder Calculation hochgezählt.
 int indexHisto = 0; // Hisory Anzeige wird hoch und runter geschaltet
-bool debug = false; // Debug Meldungen anzeigen
+bool debug = true; // Debug Meldungen anzeigen
 
 
 
@@ -34,21 +34,6 @@ CalcWithGui::CalcWithGui(QWidget* parent)
     connect(ui.pushButton_minus, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_mult, SIGNAL(released()), this, SLOT(button_pressed()));
     connect(ui.pushButton_divide, SIGNAL(released()), this, SLOT(button_pressed()));
-}
-
-double Calculation::Round(double Number, unsigned int decimals)
-{
-    Number *= pow(10, decimals);
-    if (Number >= 0)
-    {
-        floor(Number + 0.5);
-    }
-    else
-    {
-        ceil(Number - 0.5);
-    }
-    Number /= pow(10, decimals);
-    return Number;
 }
 
 void CalcWithGui::button_pressed()
@@ -196,94 +181,101 @@ void CalcWithGui::on_pushButton_result_released()
     double help;
     bool errorStatus;
     QString msg;
+    label_term = ui.label_term->text();
 
-    try {
-        errorStatus = false;
+    if (!label_term.isEmpty())
+    {
+        try {
+            errorStatus = false;
 
-        label_term = ui.label_term->text();
-        Infix = label_term.toStdString();
-        if(counterCalculation >= 0)
-        {
-            Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Übergabe das Infix und das ERgebnis der alten Rechnung um damit weiterrechnen zu können
-        }
-        else
-        {
-            Infix = check.checkInfix(Infix, 0.0); // Existiert keine History wird mit 0 gerechnet
-        }
-        if (debug)
-        {
-            msg = QString::fromStdString("Checked: "+Infix);
-            qDebug() << msg;
-        }
-        RPN ItoP(Infix);
-        std::string Postfix = ItoP.infixToPostfix(stack, Infix);
+            
+            Infix = label_term.toStdString();
 
-        if (debug)
-        {
-            msg = QString::fromStdString("Postfix: "+ Postfix);
-            qDebug() << msg;
-        }
-        Calculation Calculation1(Postfix);
-        result = Calculation1.calc(Postfix);
-        if (debug)
-        {
-            msg = QString::fromStdString("Result: " + std::to_string(result));
-            qDebug() << msg;
-        }
-        //label_term = QString::number(result , 'F', 6); //Präzision von 15
-        //ui.label_result->setText(label_term);
-        if (result < 1 && result > (-1) && result != 0)
-        {
-            ui.label_result->setText(label_term.setNum(result, 'f', 6));
+        
+            if (counterCalculation >= 0)
+            {
+                Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Übergabe das Infix und das ERgebnis der alten Rechnung um damit weiterrechnen zu können
+            }
+            else
+            {
+                Infix = check.checkInfix(Infix, 0.0); // Existiert keine History wird mit 0 gerechnet
+            }
+
             if (debug)
             {
-                msg = QString::fromStdString("Funktion1");
+                msg = QString::fromStdString("Checked: " + Infix);
                 qDebug() << msg;
             }
-        }
-        else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
-        {
-            //result = Calculation1.Round(result, 5);
-            ui.label_result->setText(label_term.setNum(result, 'g', 12));
-            if (debug)
-            {
-                msg = QString::fromStdString("Funktion2");
-                qDebug() << msg;
-            }
-        }
-       
-        else
-        {
-            ui.label_result->setText(label_term.setNum(result, 'f', 0));
-            if (debug)
-            {
-                msg = QString::fromStdString("Funktion3");
-                qDebug() << msg;
-            }
-        }
-      
-    }
-    catch (const OwnException & e)
-    {
-        qDebug() << e.what();
-        ui.label_result->setText(e.what());
-        errorStatus = true;
-    }
-    catch (std::exception e)
-    {
-        msg = QString::fromStdString("Unknown Error: " + std::string(e.what()));
-        qDebug() << msg;
-        ui.label_result->setText(msg);
-        errorStatus = true;
-    }
+            RPN ItoP(Infix);
+            std::string Postfix = ItoP.infixToPostfix(stack, Infix);
 
-    if (!errorStatus)
-    {
-        label_term = ui.label_term->text();
-        Infix = label_term.toStdString();
-        histo.writeHistory(Infix, result);
-        counterCalculation++;
-        indexHisto = counterCalculation;
+            if (debug)
+            {
+                msg = QString::fromStdString("Postfix: " + Postfix);
+                qDebug() << msg;
+            }
+            Calculation Calculation1(Postfix);
+            result = Calculation1.calc(Postfix);
+            if (debug)
+            {
+                msg = QString::fromStdString("Result: " + std::to_string(result));
+                qDebug() << msg;
+            }
+            //label_term = QString::number(result , 'F', 6); //Präzision von 15
+            //ui.label_result->setText(label_term);
+            if (result < 1 && result >(-1) && result != 0)
+            {
+                ui.label_result->setText(label_term.setNum(result, 'f', 6));
+                if (debug)
+                {
+                    msg = QString::fromStdString("Funktion1");
+                    qDebug() << msg;
+                }
+            }
+            else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
+            {
+                //result = Calculation1.Round(result, 5);
+                ui.label_result->setText(label_term.setNum(result, 'g', 12));
+                if (debug)
+                {
+                    msg = QString::fromStdString("Funktion2");
+                    qDebug() << msg;
+                }
+            }
+
+            else
+            {
+                ui.label_result->setText(label_term.setNum(result, 'f', 0));
+                if (debug)
+                {
+                    msg = QString::fromStdString("Funktion3");
+                    qDebug() << msg;
+                }
+            }
+
+        }
+        catch (const OwnException & e)
+        {
+            qDebug() << e.what();
+            ui.label_result->setText(e.what());
+            errorStatus = true;
+        }
+        catch (std::exception e)
+        {
+            msg = QString::fromStdString("Unknown Error: " + std::string(e.what()));
+            qDebug() << msg;
+            ui.label_result->setText(msg);
+            errorStatus = true;
+        }
+
+        if (!errorStatus)
+        {
+            label_term = ui.label_term->text();
+            Infix = label_term.toStdString();
+            histo.writeHistory(Infix, result);
+            counterCalculation++;
+            indexHisto = counterCalculation;
+        }
     }
 }
 

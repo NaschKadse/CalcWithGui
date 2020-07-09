@@ -15,7 +15,6 @@
 #include "InputCheck.h"
 #include "dynamicfontsizelabel.h"
 #include "ui_CalcWithGui.h"
-//#include "limits.h"
 #include <cmath>
 #include <limits>
 
