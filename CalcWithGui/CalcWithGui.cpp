@@ -323,3 +323,60 @@ void CalcWithGui::on_pushButton_potenz_released()
     }
     ui.label_term->setText(label_term);
 }
+
+void CalcWithGui::on_pushButton_potenz1_released()
+{
+    QString label_term;
+    QString label_result;
+
+    label_result = ui.label_result->text();
+
+    if (label_result == "")
+    {
+        label_term = (ui.label_term->text() + "^(-1)");
+    }
+    else
+    {
+        label_term = ui.label_result->text() + "^(-1)";
+        ui.label_result->setText("");
+    }
+    ui.label_term->setText(label_term);
+}
+
+void CalcWithGui::on_pushButton_potenz2_released()
+{
+    QString label_term;
+    QString label_result;
+
+    label_result = ui.label_result->text();
+
+    if (label_result == "")
+    {
+        label_term = (ui.label_term->text() + "^(2)");
+    }
+    else
+    {
+        label_term = ui.label_result->text() + "^(2)";
+        ui.label_result->setText("");
+    }
+    ui.label_term->setText(label_term);
+}
+
+void CalcWithGui::on_pushButton_potenz3_released()
+{
+    QString label_term;
+    QString label_result;
+
+    label_result = ui.label_result->text();
+
+    if (label_result == "")
+    {
+        label_term = (ui.label_term->text() + "^(3)");
+    }
+    else
+    {
+        label_term = ui.label_result->text() + "^(3)";
+        ui.label_result->setText("");
+    }
+    ui.label_term->setText(label_term);
+}

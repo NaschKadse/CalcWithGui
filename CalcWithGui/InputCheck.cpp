@@ -113,10 +113,10 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 				}
 			}
 
-			double bla = M_PI;
+			double pi = M_PI;
 			//help = to_string(M_PI);
 			QString blaaa;
-			blaaa = QString::number(bla, 'g', 10); //Präzision von 10
+			blaaa = QString::number(pi, 'g', 10); //Präzision von 10
 			help = blaaa.toStdString();
 			infix = infix.erase(i, 2);
 			infix = infix.insert(i, help);
