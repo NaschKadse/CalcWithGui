@@ -292,10 +292,23 @@ void CalcWithGui::on_pushButton_up_released()
         resultHisto = histo.outputResult(indexHisto);
 
         label_term = QString::fromStdString(infixHisto);
-        label_result = QString::number(resultHisto);
+        //label_result = QString::number(resultHisto);
 
         ui.label_term->setText(label_term);
-        ui.label_result->setText(label_result);
+        //ui.label_result->setText(label_result);
+
+        if (resultHisto < 1 && resultHisto >(-1))
+        {
+            ui.label_result->setText(label_term.setNum(resultHisto, 'f', 6));
+        }
+        else if ((resultHisto < 1000000 && resultHisto >= 1) || resultHisto > -1000000 && result <= (-1))
+        {
+            ui.label_result->setText(label_term.setNum(resultHisto, 'g', 12));
+        }
+        else
+        {
+            ui.label_result->setText(label_term.setNum(resultHisto, 'f', 0));
+        }
     }
 
 }
@@ -314,10 +327,23 @@ void CalcWithGui::on_pushButton_down_released()
         resultHisto = histo.outputResult(indexHisto);
 
         label_term = QString::fromStdString(infixHisto);
-        label_result = QString::number(resultHisto);
+        //label_result = QString::number(resultHisto);
 
         ui.label_term->setText(label_term);
-        ui.label_result->setText(label_result);
+        //ui.label_result->setText(label_result);
+
+        if (resultHisto < 1 && resultHisto >(-1))
+        {
+            ui.label_result->setText(label_term.setNum(resultHisto, 'f', 6));
+        }
+        else if ((resultHisto < 1000000 && resultHisto >= 1) || resultHisto > -1000000 && result <= (-1))
+        {
+            ui.label_result->setText(label_term.setNum(resultHisto, 'g', 12));
+        }
+        else
+        {
+            ui.label_result->setText(label_term.setNum(resultHisto, 'f', 0));
+        }
     }
 }
 
