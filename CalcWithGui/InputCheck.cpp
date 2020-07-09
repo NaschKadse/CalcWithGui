@@ -21,7 +21,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	std::string root; //Alles unter der Wurzel
 	double resultroot; //Ergebnis  der Wurzelrechnung
 	QString msg; // debugg message
-	const bool debug = false; //Anzeige der Debugg Meldungen
+	const bool debug = true; //Anzeige der Debugg Meldungen
 
 	if (debug)
 	{
@@ -30,6 +30,18 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		msg = QString::fromStdString("Start Checking: " + infix);
 		qDebug() << msg;
 	}
+	
+	for (int i = 0; i < int(infix.length()); i++)
+	{
+		if (cal.isOperator(infix[i]))
+		{
+			counterOperator++;
+		}
+	}
+	if (counterOperator == infix.size()) {
+		throw (OwnException("no Digit"));
+	}
+	counterOperator = 0;
 
 	for (int i = 0; i < int(infix.length()); i++)
 	{
@@ -189,7 +201,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 						qDebug() << msg;
 					}
 				}
-
+				
 				if (counterOperator > 1) //Wenn mehr als 1 Operator in Reihe ist wird dieser gelöscht
 				{
 					if ((i>0)&&(infix[i-1] == infix[i])) //genau gleicher Operator
