@@ -32,6 +32,8 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		qDebug() << msg;
 	}
 	
+	bool isKlammer = false;
+	bool containsDigit = false;
 	for (int i = 0; i < int(infix.length()); i++)
 	{
 		//if (cal.isOperator(infix[i])/* && (infix[i]) != 'r'*/) // Obacht
@@ -42,13 +44,40 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		{
 			digitCounter++;
 		}
+		if (!StackKlammeropen.empty() && !containsDigit)
+		{
+			containsDigit = isdigit(infix[i]);
+		}
+		else if (infix[i] == '(')
+		{
+			StackKlammeropen.push(infix[i]);
+			containsDigit = false;
+		}
+		if (infix[i] == ')' || (infix[i] == '(' && !StackKlammeropen.empty()))
+		{
+			StackKlammeropen.pop();
+			if (!containsDigit) {
+				throw (OwnException("Syntax error"));
+			}
+		}
 
 	}
 	if (digitCounter == 0/*counterOperator == infix.size()*/) {
-		throw (OwnException("no Digit"));
+		throw (OwnException("Syntax error"));
 	}
 	/*counterOperator = 0;*/
 	digitCounter = 0;
+	while (!StackKlammeropen.empty())
+	{
+		StackKlammeropen.pop();
+		infix += ')';
+		rightInfix = false;
+		if (debug)
+		{
+			msg = QString::fromStdString("Klammer ) zu wenig: " + infix);
+			qDebug() << msg;
+		}
+	}
 
 	for (int i = 0; i < int(infix.length()); i++)
 	{
@@ -186,7 +215,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		//Ende Ziffer
 		else
 		{
-			if (cal.isOperator(infix[i])) //Behandlung von Operatoren
+			if (cal.isOperator(infix[i]) && infix[i] != 'r') //Behandlung von Operatoren
 			{
 				counterOperator++;
 				pointCounter = 0;
@@ -401,7 +430,14 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 								msg = QString::fromStdString(std::to_string(i) + " Klammer 4.1: " + infix);
 								qDebug() << msg;
 							}
-							i=i-2;
+							if (i > 1)
+							{
+								i = i - 2;
+							}
+							else
+							{
+								i = 0;
+							}
 							msg = QString::fromStdString(std::to_string(i) + " " + infix[i]);
 							qDebug() << msg; //Test
 							rightInfix = false;
@@ -450,18 +486,6 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 	{
 		infix = "0" + infix;
 		rightInfix = false;
-	}
-
-	while (!StackKlammeropen.empty()) // Klammer ) zu wenig
-	{
-		infix += ')';
-		StackKlammeropen.pop();
-		rightInfix = false;
-		if (debug)
-		{
-			msg = QString::fromStdString("Klammer ) zu wenig: " + infix);
-			qDebug() << msg;
-		}
 	}
 
 	if (infix == "")

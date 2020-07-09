@@ -235,22 +235,31 @@ void CalcWithGui::on_pushButton_result_released()
         if (result < 1 && result > (-1) && result != 0)
         {
             ui.label_result->setText(label_term.setNum(result, 'f', 6));
-            msg = QString::fromStdString("Funktion1");
-            qDebug() << msg;
+            if (debug)
+            {
+                msg = QString::fromStdString("Funktion1");
+                qDebug() << msg;
+            }
         }
         else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
         {
             //result = Calculation1.Round(result, 5);
             ui.label_result->setText(label_term.setNum(result, 'g', 12));
-            msg = QString::fromStdString("Funktion2");
-            qDebug() << msg;
+            if (debug)
+            {
+                msg = QString::fromStdString("Funktion2");
+                qDebug() << msg;
+            }
         }
        
         else
         {
             ui.label_result->setText(label_term.setNum(result, 'f', 0));
-            msg = QString::fromStdString("Funktion3");
-            qDebug() << msg;
+            if (debug)
+            {
+                msg = QString::fromStdString("Funktion3");
+                qDebug() << msg;
+            }
         }
       
     }
