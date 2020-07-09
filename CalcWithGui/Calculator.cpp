@@ -13,9 +13,11 @@ Calculator::~Calculator()
 {
 
 }
+
+
 bool Calculator::isOperator(char c)
 {
-	if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'u')
+	if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'u' /*|| c == 'r'*/)
 	{
 		return true;
 	}
@@ -24,6 +26,7 @@ bool Calculator::isOperator(char c)
 		return false;
 	}
 }
+
 
 bool Calculator::noOperator(std::string output)
 {

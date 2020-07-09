@@ -232,13 +232,13 @@ void CalcWithGui::on_pushButton_result_released()
         }
         //label_term = QString::number(result , 'F', 6); //Präzision von 15
         //ui.label_result->setText(label_term);
-        if (result < 1 && result > (-1))
+        if (result < 1 && result > (-1) && result != 0)
         {
             ui.label_result->setText(label_term.setNum(result, 'f', 6));
             msg = QString::fromStdString("Funktion1");
             qDebug() << msg;
         }
-        else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1))
+        else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
         {
             //result = Calculation1.Round(result, 5);
             ui.label_result->setText(label_term.setNum(result, 'g', 12));
@@ -297,11 +297,11 @@ void CalcWithGui::on_pushButton_up_released()
         ui.label_term->setText(label_term);
         //ui.label_result->setText(label_result);
 
-        if (resultHisto < 1 && resultHisto >(-1))
+        if (resultHisto < 1 && resultHisto >(-1) && resultHisto != 0)
         {
             ui.label_result->setText(label_term.setNum(resultHisto, 'f', 6));
         }
-        else if ((resultHisto < 1000000 && resultHisto >= 1) || resultHisto > -1000000 && result <= (-1))
+        else if ((resultHisto < 1000000 && resultHisto >= 1) || resultHisto > -1000000 && result <= (-1) || resultHisto == 0)
         {
             ui.label_result->setText(label_term.setNum(resultHisto, 'g', 12));
         }
@@ -332,11 +332,11 @@ void CalcWithGui::on_pushButton_down_released()
         ui.label_term->setText(label_term);
         //ui.label_result->setText(label_result);
 
-        if (resultHisto < 1 && resultHisto >(-1))
+        if (resultHisto < 1 && resultHisto >(-1) && resultHisto != 0)
         {
             ui.label_result->setText(label_term.setNum(resultHisto, 'f', 6));
         }
-        else if ((resultHisto < 1000000 && resultHisto >= 1) || resultHisto > -1000000 && result <= (-1))
+        else if ((resultHisto < 1000000 && resultHisto >= 1) || resultHisto > -1000000 && result <= (-1) || resultHisto == 0)
         {
             ui.label_result->setText(label_term.setNum(resultHisto, 'g', 12));
         }
