@@ -19,6 +19,7 @@ public:
 protected:
 
 private:
+	double Round(double Number, unsigned int decimals);
 	std::string m_output;
 	std::string m_minus;
 };

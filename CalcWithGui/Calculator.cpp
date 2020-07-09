@@ -42,3 +42,4 @@ bool Calculator::noOperator(std::string output)
 	}
 	return check;
 }
+

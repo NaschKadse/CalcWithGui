@@ -18,6 +18,21 @@ double error0_exeption(double t) {
 	}
 }
 
+double Calculation::Round(double Number, unsigned int decimals)
+{
+	Number *= pow(10, decimals);
+	if (Number >= 0)
+	{
+		floor(Number + 0.5);
+	}
+	else
+	{
+		ceil(Number - 0.5);
+	}
+	Number /= pow(10, decimals);
+	return Number;
+}
+
 double Calculation::calc(std::string m_output)
 {
 	std::stack <char> stack1;		// reversed stack
@@ -121,6 +136,7 @@ double Calculation::calc(std::string m_output)
 						else if (m_output[i] == '*')
 						{
 							result = lValue * rValue;
+							//Round(result, 0);
 							stack3.push(result);
 						}
 						else if (m_output[i] == '/')

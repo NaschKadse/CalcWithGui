@@ -216,7 +216,7 @@ void CalcWithGui::on_pushButton_result_released()
             msg = QString::fromStdString("Result: " + std::to_string(result));
             qDebug() << msg;
         }
-        label_term = QString::number(result, 'g',10); //Präzision von 10
+        label_term = QString::number(result , 'f',12); //Präzision von 10
         ui.label_result->setText(label_term);
     }
     catch (const OwnException & e)
