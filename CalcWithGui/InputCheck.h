@@ -12,7 +12,7 @@
 #include "RPN.h"
 #include "OwnException.h"
 
-class InputCheck
+class InputCheck : public Calculator
 {
 	public:
 		InputCheck(std::string infix);

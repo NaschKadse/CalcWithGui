@@ -12,7 +12,6 @@ InputCheck::~InputCheck()
 
 std::string InputCheck::checkInfix(std::string infix, double res)
 {
-	Calculator cal; //Hilfsobjekt um inOperator verwenden zu können
 	std::stack<char> StackKlammeropen; // Zwischenspeicher für die offenen Klammern
 	bool rightInfix = true; // Status ob der Infix korrekt ist/war oder nicht
 	int pointCounter = 0; // Zähler für die vorhandenen Punkte zwischen zwei Operatoren
@@ -228,7 +227,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 		//Ende Ziffer
 		else
 		{
-			if (cal.isOperator(infix[i]) && (infix[i] != 'r')) //Behandlung von Operatoren
+			if (isOperator(infix[i]) && (infix[i] != 'r')) //Behandlung von Operatoren
 			{
 				counterOperator++;
 				pointCounter = 0;
@@ -297,7 +296,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 						counterOperator = 0;
 					}
 
-					else if ((i>0) && cal.isOperator(infix[i]) && cal.isOperator(infix[i-1]))
+					else if ((i>0) && isOperator(infix[i]) && isOperator(infix[i-1]))
 					{
 						//wenn einer der beiden Operatoren Minus ist wird das gesondert behandelt
 						if ((infix[i] == '-' || infix[i] == '+') && (infix[i-1] == '*' || infix[i-1] == '/'))
@@ -395,7 +394,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 					}
 
 					//. Vor Operator oder Klammer wird gelöscht
-					if ((cal.isOperator(infix[i + 1])) || (infix[i + 1] == '(') || (infix[i + 1] == ')')) 
+					if ((isOperator(infix[i + 1])) || (infix[i + 1] == '(') || (infix[i + 1] == ')')) 
 					{
 						infix = infix.erase(i, 1);
 						i--; //String wird verschoben, deshalb muss der Index mit verchoben werden
