@@ -54,13 +54,15 @@ void CalcWithGui::button_pressed()
         std::string h = (button->text()).toStdString();
         char Zeichen = h[0];
 
+        //Behandlung wenn etwas im Ergebnis steht
         if (isdigit(Zeichen))
-        {
+        {//Bei eingabe einer Zahl wird das Ergebnis gelöscht und die Zahl in die Eingabe geschrieben
             label_term = button->text();
             ui.label_result->setText("");
         }
         else {
             h = label_result.toStdString();
+            //Abfangen von Fehlercodes. Mit Fehlern darf nicht weiter gerechnet werden.
             if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
             {
                 label_term = (ui.label_result->text() + button->text());
@@ -188,13 +190,13 @@ void CalcWithGui::on_pushButton_result_released()
         try {
             errorStatus = false;
 
-            
             Infix = label_term.toStdString();
 
-        
             if (counterCalculation >= 0)
             {
-                Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation)); //Übergabe das Infix und das ERgebnis der alten Rechnung um damit weiterrechnen zu können
+                //Übergabe das Infix und das Ergebnis der alten Rechnung um damit weiterrechnen zu können
+                Infix = check.checkInfix(Infix, histo.outputResult(counterCalculation));
+
             }
             else
             {
@@ -210,12 +212,12 @@ void CalcWithGui::on_pushButton_result_released()
             //Infix wird in Postfix umgewandelt
             RPN ItoP(Infix);
             std::string Postfix = ItoP.infixToPostfix(stack, Infix);
-
             if (debug)
             {
                 msg = QString::fromStdString("Postfix: " + Postfix);
                 qDebug() << msg;
             }
+
             //Berechnung
             Calculation Calculation1(Postfix);
             result = Calculation1.calc(Postfix);
@@ -234,6 +236,7 @@ void CalcWithGui::on_pushButton_result_released()
 
             ui.label_result->setText(label_term);*/
 
+            //Runden der Ausgabe
             label_term = QString::number(result , 'F', 6); //Präzision von 15
             ui.label_result->setText(label_term);
             if (result < 1 && result >(-1) && result != 0)
@@ -241,13 +244,13 @@ void CalcWithGui::on_pushButton_result_released()
                 ui.label_result->setText(label_term.setNum(result, 'f', 6));
                 if (debug)
                 {
-                    msg = QString::fromStdString("Funktion1");
+                    msg = QString::fromStdString("Funktion 1");
                     qDebug() << msg;
                 }
             }
+           
             else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
             {
-                //result = Calculation1.Round(result, 5);
                 ui.label_result->setText(label_term.setNum(result, 'g', 12));
                 if (debug)
                 {
@@ -281,6 +284,7 @@ void CalcWithGui::on_pushButton_result_released()
             errorStatus = true;
         }
 
+        //Speichern der Eingabe in der History
         if (!errorStatus)
         {
             label_term = ui.label_term->text();
@@ -306,11 +310,10 @@ void CalcWithGui::on_pushButton_up_released()
         resultHisto = histo.outputResult(indexHisto);
 
         label_term = QString::fromStdString(infixHisto);
-        //label_result = QString::number(resultHisto);
 
         ui.label_term->setText(label_term);
-        //ui.label_result->setText(label_result);
 
+        //Ändern der Schreibweise (nicht in der E Notation )bevor es abgespeichert wird.
         if (resultHisto < 1 && resultHisto >(-1) && resultHisto != 0)
         {
             ui.label_result->setText(label_term.setNum(resultHisto, 'f', 6));
@@ -341,11 +344,10 @@ void CalcWithGui::on_pushButton_down_released()
         resultHisto = histo.outputResult(indexHisto);
 
         label_term = QString::fromStdString(infixHisto);
-        //label_result = QString::number(resultHisto);
 
         ui.label_term->setText(label_term);
-        //ui.label_result->setText(label_result);
 
+        //Ändern der Schreibweise (nicht in der E Notation )bevor es abgespeichert wird.
         if (resultHisto < 1 && resultHisto >(-1) && resultHisto != 0)
         {
             ui.label_result->setText(label_term.setNum(resultHisto, 'f', 6));
@@ -384,6 +386,7 @@ void CalcWithGui::on_pushButton_potenz_released()
 {
     QString label_term;
     QString label_result;
+    std::string h;
 
     label_result = ui.label_result->text();
 
@@ -393,8 +396,19 @@ void CalcWithGui::on_pushButton_potenz_released()
     }
     else
     {
-        label_term = ui.label_result->text()+"^(";
-        ui.label_result->setText("");
+        h = label_result.toStdString();
+
+        //Verhindert das mit Fehlercodes weiter gerechnet wird.
+        if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
+        {
+            label_term = (ui.label_result->text() + "^(");
+            ui.label_result->setText("");
+        }
+        else
+        {
+            label_term = "^(";
+            ui.label_result->setText("");
+        }
     }
     ui.label_term->setText(label_term);
 }
@@ -414,6 +428,8 @@ void CalcWithGui::on_pushButton_potenz1_released()
     else
     {
         h = label_result.toStdString();
+
+        //Verhindert das mit Fehlercodes weiter gerechnet wird.
         if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
         {
             label_term = (ui.label_result->text() + "^(-1)");
@@ -443,6 +459,8 @@ void CalcWithGui::on_pushButton_potenz2_released()
     else
     {
         h = label_result.toStdString();
+
+        //Verhindert das mit Fehlercodes weiter gerechnet wird.
         if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
         {
             label_term = (ui.label_result->text() + "^(2)");
@@ -459,6 +477,7 @@ void CalcWithGui::on_pushButton_potenz2_released()
 
 void CalcWithGui::on_pushButton_plusminus_released()
 {
+    //Umgekehrtes Ergebnis wird verwendet für  die näxhste rechnung -x --> -(-Ans)
     QString label_term;
     QString label_result;
     std::string h;
