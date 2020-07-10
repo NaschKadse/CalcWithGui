@@ -1067,7 +1067,7 @@ QPushButton:pressed {
      <string>E</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_potenz3">
+   <widget class="QPushButton" name="pushButton_plusminus">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -1095,7 +1095,10 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>^3</string>
+     <string>±</string>
+    </property>
+    <property name="shortcut">
+     <string>M</string>
     </property>
    </widget>
   </widget>

@@ -206,6 +206,8 @@ void CalcWithGui::on_pushButton_result_released()
                 msg = QString::fromStdString("Checked: " + Infix);
                 qDebug() << msg;
             }
+
+            //Infix wird in Postfix umgewandelt
             RPN ItoP(Infix);
             std::string Postfix = ItoP.infixToPostfix(stack, Infix);
 
@@ -214,6 +216,7 @@ void CalcWithGui::on_pushButton_result_released()
                 msg = QString::fromStdString("Postfix: " + Postfix);
                 qDebug() << msg;
             }
+            //Berechnung
             Calculation Calculation1(Postfix);
             result = Calculation1.calc(Postfix);
             if (debug)
@@ -221,45 +224,47 @@ void CalcWithGui::on_pushButton_result_released()
                 msg = QString::fromStdString("Result: " + std::to_string(result));
                 qDebug() << msg;
             }
-            int i = rint(result * 1000.0);
+
+            //Alternativ gerundete Ausgabe
+            /*int i = rint(result * 1000.0);
             if(i % 1000)
                 label_term = QString::number(result, 'f', i % 10 ? 5 : 1);
             else
                 label_term = QString::number(i / 1000);
 
+            ui.label_result->setText(label_term);*/
+
+            label_term = QString::number(result , 'F', 6); //Präzision von 15
             ui.label_result->setText(label_term);
+            if (result < 1 && result >(-1) && result != 0)
+            {
+                ui.label_result->setText(label_term.setNum(result, 'f', 6));
+                if (debug)
+                {
+                    msg = QString::fromStdString("Funktion1");
+                    qDebug() << msg;
+                }
+            }
+            else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
+            {
+                //result = Calculation1.Round(result, 5);
+                ui.label_result->setText(label_term.setNum(result, 'g', 12));
+                if (debug)
+                {
+                    msg = QString::fromStdString("Funktion2");
+                    qDebug() << msg;
+                }
+            }
 
-            //label_term = QString::number(result , 'F', 6); //Präzision von 15
-            //ui.label_result->setText(label_term);
-            //if (result < 1 && result >(-1) && result != 0)
-            //{
-            //    ui.label_result->setText(label_term.setNum(result, 'f', 6));
-            //    if (debug)
-            //    {
-            //        msg = QString::fromStdString("Funktion1");
-            //        qDebug() << msg;
-            //    }
-            //}
-            //else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
-            //{
-            //    //result = Calculation1.Round(result, 5);
-            //    ui.label_result->setText(label_term.setNum(result, 'g', 12));
-            //    if (debug)
-            //    {
-            //        msg = QString::fromStdString("Funktion2");
-            //        qDebug() << msg;
-            //    }
-            //}
-
-            //else
-            //{
-            //    ui.label_result->setText(label_term.setNum(result, 'f', 0));
-            //    if (debug)
-            //    {
-            //        msg = QString::fromStdString("Funktion3");
-            //        qDebug() << msg;
-            //    }
-            //}
+            else
+            {
+                ui.label_result->setText(label_term.setNum(result, 'f', 0));
+                if (debug)
+                {
+                    msg = QString::fromStdString("Funktion3");
+                    qDebug() << msg;
+                }
+            }
 
         }
         catch (const OwnException & e)
@@ -452,31 +457,19 @@ void CalcWithGui::on_pushButton_potenz2_released()
     ui.label_term->setText(label_term);
 }
 
-void CalcWithGui::on_pushButton_potenz3_released()
+void CalcWithGui::on_pushButton_plusminus_released()
 {
     QString label_term;
     QString label_result;
     std::string h;
 
     label_result = ui.label_result->text();
+    
 
-    if (label_result == "")
+    if (label_result != "")
     {
-        label_term = (ui.label_term->text() + "^(3)");
+        label_term = ("-(" + label_result+")");
+        ui.label_term->setText(label_term);
+        ui.label_result->setText("");
     }
-    else
-    {
-        h = label_result.toStdString();
-        if (isdigit(h[0]) || ((h[0] == '-') && isdigit(h[1])))
-        {
-            label_term = (ui.label_result->text() + "^(3)");
-            ui.label_result->setText("");
-        }
-        else
-        {
-            label_term = "^(3)";
-            ui.label_result->setText("");
-        }
-    }
-    ui.label_term->setText(label_term);
 }

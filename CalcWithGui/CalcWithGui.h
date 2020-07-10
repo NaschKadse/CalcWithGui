@@ -43,7 +43,7 @@ private slots:
     void on_pushButton_potenz_released();
     void on_pushButton_potenz1_released();
     void on_pushButton_potenz2_released();
-    void on_pushButton_potenz3_released();
+    void on_pushButton_plusminus_released();
 };
 
 #endif // !CALCWITHGUI_H
