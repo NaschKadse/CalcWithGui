@@ -16,7 +16,9 @@ class InputCheck
 {
 	public:
 		InputCheck(std::string infix);
+
 		~InputCheck();
+
 		std::string checkInfix(std::string infix, double res);
 
 	protected:

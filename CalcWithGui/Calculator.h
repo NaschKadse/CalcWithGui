@@ -11,8 +11,11 @@ class Calculator
 {
 public:
 	Calculator();
+
 	Calculator(std::string input);
+
 	~Calculator();
+
 	virtual bool isOperator(char c);
 	virtual bool noOperator(std::string output);
 

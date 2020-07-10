@@ -8,10 +8,7 @@ History::History(std::string infix, double result) : m_infix(infix), m_result(re
 {
 
 }
-History::History(int index) : m_index(index)
-{
 
-}
 History::~History()
 {
 

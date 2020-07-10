@@ -18,6 +18,7 @@ public:
     void setTextColor(QColor color);
     QColor getTextColor();
     void setTextAndColor(const QString& text, QColor color = QColor::Invalid);
+
 signals:
     void clicked();
 

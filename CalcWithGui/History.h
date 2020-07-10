@@ -11,8 +11,9 @@ class History : public Calculator
 {
 public:
 	History(std::string infix, double result);
-	History(int index);
+
 	~History();
+
 	void writeHistory(std::string m_infix, double  m_result);
 	std::string outputInfix(int index);
 	double outputResult(int index);

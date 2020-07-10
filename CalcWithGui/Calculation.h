@@ -17,13 +17,13 @@ class Calculation : public Calculator
 public:
 	Calculation(std::string output);
 	~Calculation();
+
 	double calc(std::string output);
-	double Round(double Number, int decimals);
 
 protected:
 
 private:
-	double Round(double Number, unsigned int decimals);
+	double Round(double Number, int decimals);
 	std::string m_output;
 	std::string m_minus;
 };
