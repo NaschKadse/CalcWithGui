@@ -126,7 +126,7 @@ double Calculation::calc(std::string m_output)
 						else if (m_output[i] == '*')
 						{
 							result  = lValue * rValue;
-							result = Round(result, 5);  // round to maximum display length -1
+							//result = Round(result, 5);  // round to maximum display length -1
 							stack3.push(result);
 						}
 						else if (m_output[i] == '/')
@@ -150,7 +150,7 @@ double Calculation::calc(std::string m_output)
 		}
 	}
 	endresult = stack3.top();
-	endresult = Round(endresult, 6); // round to maximum display length
+	//endresult = Round(endresult, 6); // round to maximum display length
 	
 	return endresult;
 }

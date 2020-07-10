@@ -221,37 +221,45 @@ void CalcWithGui::on_pushButton_result_released()
                 msg = QString::fromStdString("Result: " + std::to_string(result));
                 qDebug() << msg;
             }
+            int i = rint(result * 1000.0);
+            if(i % 1000)
+                label_term = QString::number(result, 'f', i % 10 ? 5 : 1);
+            else
+                label_term = QString::number(i / 1000);
+
+            ui.label_result->setText(label_term);
+
             //label_term = QString::number(result , 'F', 6); //Präzision von 15
             //ui.label_result->setText(label_term);
-            if (result < 1 && result >(-1) && result != 0)
-            {
-                ui.label_result->setText(label_term.setNum(result, 'f', 6));
-                if (debug)
-                {
-                    msg = QString::fromStdString("Funktion1");
-                    qDebug() << msg;
-                }
-            }
-            else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
-            {
-                //result = Calculation1.Round(result, 5);
-                ui.label_result->setText(label_term.setNum(result, 'g', 12));
-                if (debug)
-                {
-                    msg = QString::fromStdString("Funktion2");
-                    qDebug() << msg;
-                }
-            }
+            //if (result < 1 && result >(-1) && result != 0)
+            //{
+            //    ui.label_result->setText(label_term.setNum(result, 'f', 6));
+            //    if (debug)
+            //    {
+            //        msg = QString::fromStdString("Funktion1");
+            //        qDebug() << msg;
+            //    }
+            //}
+            //else if ((result < 1000000 && result >= 1) || result > -1000000 && result <= (-1) || result == 0)
+            //{
+            //    //result = Calculation1.Round(result, 5);
+            //    ui.label_result->setText(label_term.setNum(result, 'g', 12));
+            //    if (debug)
+            //    {
+            //        msg = QString::fromStdString("Funktion2");
+            //        qDebug() << msg;
+            //    }
+            //}
 
-            else
-            {
-                ui.label_result->setText(label_term.setNum(result, 'f', 0));
-                if (debug)
-                {
-                    msg = QString::fromStdString("Funktion3");
-                    qDebug() << msg;
-                }
-            }
+            //else
+            //{
+            //    ui.label_result->setText(label_term.setNum(result, 'f', 0));
+            //    if (debug)
+            //    {
+            //        msg = QString::fromStdString("Funktion3");
+            //        qDebug() << msg;
+            //    }
+            //}
 
         }
         catch (const OwnException & e)
