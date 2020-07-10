@@ -468,7 +468,7 @@ void CalcWithGui::on_pushButton_plusminus_released()
 
     if (label_result != "")
     {
-        label_term = ("-(" + label_result+")");
+        label_term = ("-(Ans)");
         ui.label_term->setText(label_term);
         ui.label_result->setText("");
     }
