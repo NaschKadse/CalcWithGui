@@ -12,11 +12,7 @@ RPN::~RPN()
 // Operator precedence function
 int RPN::precedence(char c)
 {
-	/*if (c == 'u')
-	{
-		return 4;
-	}
-	else*/ if (c == '^' || c == 'r'|| c == 'u')
+	 if (c == '^' || c == 'r'|| c == 'u')
 	{
 		return 3;
 	}
@@ -55,7 +51,7 @@ std::string RPN::infixToPostfix(std::stack<char>stack, std::string m_infix)
 		}
 
 		//Pre Numeric Spacer
-		if ((isdigit(m_infix[i]) && isOperator(m_infix[i + 1])) || (m_infix[i] == ')' && (isOperator(m_infix[i + 1]) /*|| m_infix[i + 1] == 'r'*/)))
+		if ((isdigit(m_infix[i]) && isOperator(m_infix[i + 1])) || (m_infix[i] == ')' && (isOperator(m_infix[i + 1]))))
 		{
 			postfix += spacer;
 		}
@@ -85,7 +81,7 @@ std::string RPN::infixToPostfix(std::stack<char>stack, std::string m_infix)
 		else if (((isOperator(m_infix[i]) && i > 0 && m_infix[i - 1] != '(') || m_infix[i] == 'r'|| m_infix[i] == 'u'))
 		{
 			// Push Operator to Stack if stack is empty
-			if (stack.empty() /*&& m_infix[i] != 'u'*/)
+			if (stack.empty())
 			{
 				stack.push(m_infix[i]);
 				test += stack.top();

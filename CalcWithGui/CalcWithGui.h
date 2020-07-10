@@ -15,9 +15,6 @@
 #include "InputCheck.h"
 #include "dynamicfontsizelabel.h"
 #include "ui_CalcWithGui.h"
-#include <cmath>
-#include <limits>
-
 
 
 class CalcWithGui : public QMainWindow
