@@ -2,7 +2,6 @@
 #define RPN_H
 
 #include <string>
-#include <iostream>
 #include <stack>
 
 #include "Calculator.h"

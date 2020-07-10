@@ -5,8 +5,6 @@
 #include <stack>
 #include <QDebug>
 #include <cmath>
-#include <limits>
-#include <iomanip>
 
 #include "Calculator.h"
 #include "OwnException.h"
