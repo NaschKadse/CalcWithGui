@@ -78,7 +78,7 @@ std::string InputCheck::checkInfix(std::string infix, double res)
 			}
 		}
 	}
-	if (digitCounter == 0) {
+	if (digitCounter == 0 || ((infix[2] == 'r') && (digitCounter == 1))) {
 		throw (OwnException("Syntax error 2"));
 	}
 	digitCounter = 0;

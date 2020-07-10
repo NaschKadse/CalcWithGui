@@ -477,7 +477,7 @@ void CalcWithGui::on_pushButton_potenz2_released()
 
 void CalcWithGui::on_pushButton_plusminus_released()
 {
-    //Umgekehrtes Ergebnis wird verwendet für  die näxhste rechnung -x --> -(-Ans)
+    //Umgekehrtes Ergebnis wird verwendet für  die nächste rechnung -x --> -(-Ans)
     QString label_term;
     QString label_result;
     std::string h;
