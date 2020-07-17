@@ -1105,7 +1105,7 @@ QPushButton:pressed {
   <customwidget>
    <class>DynamicFontSizeLabel</class>
    <extends>QLabel</extends>
-   <header location="global">dynamicfontsizelabel.h</header>
+   <header>dynamicfontsizelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
